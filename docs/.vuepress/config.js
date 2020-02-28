@@ -18,6 +18,10 @@ module.exports = {
     docsRepo: "nartawak/flutter-workshop",
     docsDir: "docs",
     editLinks: true,
+    algolia: {
+      apiKey: "52f16fde1657a442a7341f738831ad23",
+      indexName: "FLUTTER_WORKSHOP"
+    },
     locales: {
       "/": {
         selectText: "Languages",
