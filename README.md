@@ -1,32 +1,31 @@
-<h1 align="center">Welcome to workshop-template 👋</h1>
+<h1 align="center">Welcome to flutter-workshop 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/npm/v/workshop-template.svg">
-  <a href="https://app.netlify.com/sites/workshop-template/deploys">
-      <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/7f294250-3f68-4dd3-844b-21fbdae76905/deploy-status" target="_blank" />
+  <a href="https://app.netlify.com/sites/flutter-workshop/deploys">
+      <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/9b10e32e-76d7-41ea-aeda-508664be4840/deploy-status" target="_blank" />
   </a>
-  <a href="https://travis-ci.org/Slashgear/workshop-template"><img src="https://travis-ci.org/Slashgear/workshop-template.svg?branch=master" alt="Build Status"></a>
-  <img src="https://img.shields.io/github/license/Slashgear/workshop-template.svg" alt="license">
-  <img src="https://img.shields.io/github/stars/Slashgear/workshop-template.svg?style=social" alt="stars">
-  <img src="https://img.shields.io/github/forks/Slashgear/workshop-template.svg?style=social" alt="fork me">
-  <a href="https://twitter.com/Slashgear_">
-    <img alt="Twitter: Slashgear_" src="https://img.shields.io/twitter/follow/Slashgear_.svg?style=social" target="_blank" />
+  <a href="https://travis-ci.com/nartawak/flutter-workshop"><img src="https://travis-ci.com/nartawak/flutter-workshop.svg?branch=master" alt="Build Status"></a>
+  <img src="https://img.shields.io/github/license/nartawak/flutter-workshop.svg" alt="license">
+  <img src="https://img.shields.io/github/stars/nartawak/flutter-workshop.svg?style=social" alt="stars">
+  <img src="https://img.shields.io/github/forks/nartawak/flutter-workshop.svg?style=social" alt="fork me">
+  <a href="https://twitter.com/Nartawak">
+    <img alt="Twitter: Nartawak" src="https://img.shields.io/twitter/follow/Nartawak.svg?style=social" target="_blank" />
   </a>
 </p>
 
-> workshop-template to learn concepts, API and best practices
+> Flutter workshops to learn concepts, API and best practices
 
-### 🏠 [Homepage](https://workshop-template-vuepress.netlify.com/)
+### 🏠 [Homepage](https://workshop-flutter.netlify.com/)
 
 ## Usage
 
-Just go to https://workshop-template-vuepress.netlify.com/
+Just go to https://workshop-flutter.netlify.com/
 
 ## Author
 
-👤 **Antoine CARON**
+👤 **Nicolas Hodicq**
 
-- Twitter: [@Slashgear\_](https://twitter.com/Slashgear_)
-- Github: [@Slashgear](https://github.com/Slashgear)
+- Twitter: [@Nartawak](https://twitter.com/Nartawak)
+- Github: [@Nartawak](https://github.com/nartawak)
 
 ## Show your support
 
@@ -34,8 +33,8 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2019 [Antoine CARON](https://github.com/Slashgear).<br />
-This project is [MIT](https://github.com/Slashgear/workshop-template/blob/master/LICENSE) licensed.
+Copyright © 2019 [Nicolas Hodicq](https://github.com/nartawak).<br />
+This project is [MIT](https://github.com/nartawak/flutter-workshop/blob/master/LICENSE) licensed.
 
 ---
 
