@@ -33,7 +33,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2019 [Nicolas Hodicq](https://github.com/nartawak).<br />
+Copyright © 2020 [Nicolas Hodicq](https://github.com/nartawak).<br />
 This project is [MIT](https://github.com/nartawak/flutter-workshop/blob/master/LICENSE) licensed.
 
 ---

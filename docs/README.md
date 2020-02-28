@@ -10,5 +10,5 @@ features:
     details: No
   - title: Feature 3
     details: Why not !
-footer: MIT Licensed | Copyright © 2019-present Nicolas Hodicq
+footer: MIT Licensed | Copyright © 2020-present Nicolas Hodicq
 ---
