@@ -6,23 +6,17 @@ This project is open-sourced. If you find typos or if you want to contribute, fe
 
 ## Requirements
 
-- Install NodeJS `> 10.0.0`
-- [Install Yarn](https://yarnpkg.com/en/docs/install)
-- Have an up to date browser, like Firefox or Chrome.
+- Install [Flutter](https://flutter.dev/docs/get-started/install)
+- `flutter doctor` should be executed without warnings
+
+::: warning
+Flutter applications are written with the [Dart language.](https://dart.dev/guides/language/language-tour)
+
+This project is only focused on providing Flutter skills, not Dart skills. For those who don't know the Dart language yet, links will be shared to the Dart language documentation.
+:::
 
 ## Install
 
-All exercises are listed in `packages` folder grouped by difficulty.
-With the help of `yarn` workspaces feature, all dependencies for all exercises will be downloaded once.
+Each workshop will specify where the starting project is and the steps to install the dependencies.
 
-Clone the repository:
-
-```bash
-git clone http://github.com/Slashgear/workshop-template.git
-```
-
-Just run:
-
-```bash
-yarn install
-```
+The starting projects may be in the `packages` folder of this repository but it may be in a dedicated repository, especially for CI/CD oriented or non-stable flutter feature workshops.
