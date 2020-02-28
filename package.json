@@ -1,13 +1,10 @@
 {
-  "name": "workshop-template",
+  "name": "flutter-workshop",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "Antoine Caron <antoine395.caron@gmail.com>",
+  "description": "Workshop about Flutter",
+  "author": "Nicolas Hodicq <nartawak@gmail.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "./packages/**/*"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"

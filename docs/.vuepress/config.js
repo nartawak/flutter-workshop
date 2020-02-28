@@ -1,21 +1,21 @@
 module.exports = {
   plugins: {
     sitemap: {
-      hostname: "https://workshop-template-vuepress.netlify.com"
+      hostname: "https://flutter-workshop.netlify.com"
     }
   },
   locales: {
     "/": {
       lang: "en-US", // this will be set as the lang attribute on <html>
-      title: "Workshop Template"
+      title: "Flutter Workshops"
     }
   },
   themeConfig: {
     editLinkText: "Edit cette page sur Github",
     lastUpdated: "Mis à jour le",
-    repo: "Slashgear/workshop-template",
+    repo: "nartawak/flutter-workshop",
     repoLabel: "Contribue !",
-    docsRepo: "Slashgear/workshop-template",
+    docsRepo: "nartawak/flutter-workshop",
     docsDir: "docs",
     editLinks: true,
     locales: {
