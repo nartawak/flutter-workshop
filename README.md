@@ -16,6 +16,8 @@
 
 ### 🏠 [Homepage](https://workshop-flutter.netlify.com/)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nartawak/flutter-workshop.svg)](https://greenkeeper.io/)
+
 ## Usage
 
 Just go to https://workshop-flutter.netlify.com/
