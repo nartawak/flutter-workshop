@@ -14,13 +14,13 @@
 
 > Flutter workshops to learn concepts, API and best practices
 
-### 🏠 [Homepage](https://workshop-flutter.netlify.com/)
+### 🏠 [Homepage](https://flutter-workshop.netlify.com/)
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/nartawak/flutter-workshop.svg)](https://greenkeeper.io/)
 
 ## Usage
 
-Just go to https://workshop-flutter.netlify.com/
+Just go to https://flutter-workshop.netlify.com/
 
 ## Author
 
