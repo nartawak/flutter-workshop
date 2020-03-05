@@ -5,7 +5,7 @@ actionText: Get Started →
 actionLink: /workshops/
 tagline: Learn Flutter by pratical
 features:
-  - title:  Choose your Level
+  - title: Choose your Level
     details: From novice to advanced, the workshops are sorted by level  👉 novice, intermediate or advanced.
   - title: Stable channel
     details: To facilitate maintenance and promote production-ready functionality, the workshops are based on the stable branch of Flutter.
