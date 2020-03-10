@@ -1,9 +1,14 @@
 <h1 align="center">Welcome to flutter-workshop 👋</h1>
 <p>
   <a href="https://app.netlify.com/sites/flutter-workshop/deploys">
-      <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/9b10e32e-76d7-41ea-aeda-508664be4840/deploy-status" target="_blank" />
+    <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/9b10e32e-76d7-41ea-aeda-508664be4840/deploy-status" target="_blank" />
   </a>
-  <a href="https://travis-ci.com/nartawak/flutter-workshop"><img src="https://travis-ci.com/nartawak/flutter-workshop.svg?branch=master" alt="Build Status"></a>
+  <a href="https://travis-ci.com/nartawak/flutter-workshop">
+    <img src="https://travis-ci.com/nartawak/flutter-workshop.svg?branch=master" alt="Build Status">
+  </a>
+  <a href="https://greenkeeper.io/">
+    <img src="https://badges.greenkeeper.io/nartawak/flutter-workshop.svg" alt="Greenkeeper badge">
+  </a>
   <img src="https://img.shields.io/github/license/nartawak/flutter-workshop.svg" alt="license">
   <img src="https://img.shields.io/github/stars/nartawak/flutter-workshop.svg?style=social" alt="stars">
   <img src="https://img.shields.io/github/forks/nartawak/flutter-workshop.svg?style=social" alt="fork me">
@@ -15,8 +20,6 @@
 > Flutter workshops to learn concepts, API and best practices
 
 ### 🏠 [Homepage](https://flutter-workshop.netlify.com/)
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/nartawak/flutter-workshop.svg)](https://greenkeeper.io/)
 
 ## Usage
 
