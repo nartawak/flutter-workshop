@@ -14,5 +14,5 @@ features:
 footer: MIT Licensed | Copyright © 2020-present Nicolas Hodicq
 meta:
   - name: description
-    content: Learn webpack concepts by example, How to set up webpack? How to configure webpack? Babel, Scss? From beginner workshops to advanced exercises
+    content: Learn Flutter by example !!  From beginner workshops to advanced exercises
 ---
