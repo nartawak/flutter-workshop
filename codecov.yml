@@ -1,0 +1,17 @@
+coverage:
+  range: 80..100
+  status:
+    project:
+      default: off
+      basic_layout_starter:
+        flags: basic_layout_starter
+      basic_layout_solution:
+        flags: basic_layout_solution
+
+flags:
+  basic_layout_starter:
+    paths:
+      - packages/basic_layout/basic_layout_starter
+  basic_layout_solution:
+    paths:
+      - packages/basic_layout/basic_layout_solution
