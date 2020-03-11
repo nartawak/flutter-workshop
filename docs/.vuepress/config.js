@@ -32,12 +32,13 @@ module.exports = {
         ],
         sidebar: [
           "/workshops/",
-          "/why.md",
           {
-            title: "Step 1",
+            title: "Novice",
             collapsable: false,
-            children: ["/workshops/step1/first"]
-          }
+            children: [
+              "/workshops/novice/01_basic_layout",
+            ]
+          },
         ]
       }
     }
