@@ -1,14 +1,14 @@
 module.exports = {
   plugins: {
     sitemap: {
-      hostname: "https://flutter-workshop.netlify.com"
-    }
+      hostname: "https://flutter-workshop.netlify.com",
+    },
   },
   locales: {
     "/": {
       lang: "en-US", // this will be set as the lang attribute on <html>
-      title: "Flutter Workshops"
-    }
+      title: "Flutter Workshops",
+    },
   },
   themeConfig: {
     editLinkText: "Edit cette page sur Github",
@@ -20,7 +20,7 @@ module.exports = {
     editLinks: true,
     algolia: {
       apiKey: "52f16fde1657a442a7341f738831ad23",
-      indexName: "FLUTTER_WORKSHOP"
+      indexName: "FLUTTER_WORKSHOP",
     },
     locales: {
       "/": {
@@ -28,7 +28,7 @@ module.exports = {
         label: "English",
         nav: [
           { text: "Home", link: "/" },
-          { text: "Workshops", link: "/workshops/" }
+          { text: "Workshops", link: "/workshops/" },
         ],
         sidebar: [
           "/workshops/",
@@ -36,10 +36,10 @@ module.exports = {
           {
             title: "Step 1",
             collapsable: false,
-            children: ["/workshops/step1/first"]
-          }
-        ]
-      }
-    }
-  }
+            children: ["/workshops/step1/first"],
+          },
+        ],
+      },
+    },
+  },
 };
