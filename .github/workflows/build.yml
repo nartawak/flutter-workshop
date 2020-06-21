@@ -16,8 +16,6 @@ jobs:
     strategy:
       matrix:
         package: [
-          "packages/novice/basic_layout/basic_layout_starter",
-          "packages/novice/basic_layout/basic_layout_solution",
         ]
         channel: ["stable"]
 
