@@ -7,8 +7,8 @@ tagline: Learn Flutter by pratical
 features:
   - title: Choose your Level
     details: From novice to advanced, the workshops are sorted by level  👉 novice, intermediate or advanced.
-  - title: Stable channel
-    details: To facilitate maintenance and promote production-ready functionality, the workshops are based on the stable branch of Flutter.
+  - title: Experiments
+    details: Find workshops based on experiments and whose results we would like to share with the community
   - title: Open source
     details: Feel free to contribute, add a workshop, open an issue or a pull request. All contributors are welcome !!
 footer: MIT Licensed | Copyright © 2020-present Nicolas Hodicq
