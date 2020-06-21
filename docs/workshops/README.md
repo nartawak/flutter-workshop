@@ -17,28 +17,6 @@ This project is only focused on providing Flutter skills, not Dart skills. For t
 
 ## Install
 
-All exercises are listed in `packages` folder grouped by difficulty.
+Each workshop will specify where the starting project is and the steps to install the dependencies.
 
-Each exercise has two Flutter projects, the starter project and the solution project.
-
-Clone the repository:
-
-```bash
-git clone https://github.com/nartawak/flutter-workshop.git
-```
-
-Move the first workshop :
-
-```bash
-cd flutter-workshop/packages/basic_layout/basic_layout_starter
-```
-
-Install dependencies :
-
-```bash
-flutter pub get
-```
-
-::: warning
-You will need to install the dependencies for each Flutter project.
-:::
+The starting projects may be in the `packages` folder of this repository but it may be in a dedicated repository, especially for CI/CD oriented or non-stable flutter feature workshops.
