@@ -32,7 +32,6 @@ module.exports = {
         ],
         sidebar: [
           "/workshops/",
-          "/why.md",
           {
             title: "Step 1",
             collapsable: false,
