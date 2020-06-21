@@ -13,7 +13,7 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "lint": "yarn prettier --list-different 'packages/**/*.{js,md}' 'docs/**/*.{js,md}'"
+    "lint": "yarn prettier --list-different 'docs/**/*.{js,md}'"
   },
   "devDependencies": {
     "husky": "4.2.4",
