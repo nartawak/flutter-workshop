@@ -2,7 +2,7 @@
 home: true
 heroImage: /logo_flutter.png
 actionText: Get Started →
-actionLink: /workshops/
+actionLink: /get_started/
 tagline: Learn Flutter by pratical
 features:
   - title: Choose your Level
