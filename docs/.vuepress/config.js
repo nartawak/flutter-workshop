@@ -1,3 +1,21 @@
+const fs = require("fs");
+const path = require("path");
+
+function getSideBar(folder, title) {
+  const extension = [".md"];
+
+  const files = fs
+    .readdirSync(path.join(`${__dirname}/../${folder}`))
+    .filter(
+      (item) =>
+        item.toLowerCase() != "readme.md" &&
+        fs.statSync(path.join(`${__dirname}/../${folder}`, item)).isFile() &&
+        extension.includes(path.extname(item))
+    );
+
+  return [{ title: title, children: ["", ...files] }];
+}
+
 module.exports = {
   plugins: {
     sitemap: {
@@ -6,7 +24,7 @@ module.exports = {
   },
   locales: {
     "/": {
-      lang: "en-US", // this will be set as the lang attribute on <html>
+      lang: "en-US",
       title: "Flutter Workshops",
     },
   },
@@ -28,14 +46,25 @@ module.exports = {
         label: "English",
         nav: [
           { text: "Home", link: "/" },
-          { text: "Workshops", link: "/workshops/" },
+          { text: "Workshops", link: "/get_started/" },
         ],
         sidebar: [
-          "/workshops/",
+          "/get_started/",
           {
-            title: "Step 1",
+            title: "Workshops",
             collapsable: false,
-            children: ["/workshops/step1/first"],
+            path: "/workshops/",
+            children: [
+              {
+                title: "Punk API",
+                collapsable: true,
+                path: "/workshops/01_punk_api/",
+                children: [
+                  "/workshops/01_punk_api/00_initial",
+                  "/workshops/01_punk_api/01_layout",
+                ],
+              },
+            ],
           },
         ],
       },
