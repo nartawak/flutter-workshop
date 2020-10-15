@@ -59,7 +59,10 @@ module.exports = {
                 title: "Punk API",
                 collapsable: true,
                 path: "/workshops/01_punk_api/",
-                children: ["/workshops/01_punk_api/01_layout"],
+                children: [
+                  "/workshops/01_punk_api/00_initial",
+                  "/workshops/01_punk_api/01_layout",
+                ],
               },
             ],
           },
