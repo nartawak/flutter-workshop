@@ -81,7 +81,8 @@ If you look at the `lib/main.dart` file, you can see it has many reponsabilities
 ├── main.dart
 ├── app.dart
 └── routes
-    └── master_route.dart
+    └── master
+        └── master_route.dart
 ```
 
 - keep only the main function in the `lib/main.dart` file
