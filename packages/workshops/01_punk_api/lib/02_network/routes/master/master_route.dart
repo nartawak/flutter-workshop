@@ -31,23 +31,6 @@ class _MasterRouteStatefulState extends State<MasterRouteStateful> {
       );
     }
 
-    // return SingleChildScrollView(
-    //   child: Column(
-    //     children: [
-    //       ..._beers
-    //           .map(
-    //             (beer) => Container(
-    //               margin: EdgeInsets.only(bottom: 10),
-    //               child: PunkApiCard(
-    //                 beer: beer,
-    //               ),
-    //             ),
-    //           )
-    //           .toList()
-    //     ],
-    //   ),
-    // );
-
     return ListView.builder(
       itemCount: _beers.length,
       itemBuilder: (_, index) {

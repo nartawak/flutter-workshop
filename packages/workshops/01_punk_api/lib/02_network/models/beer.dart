@@ -8,7 +8,12 @@ class Beer {
   final String description;
   final String imageURL;
 
-  Beer({this.id, this.name, this.tagline, this.description, this.imageURL})
+  Beer(
+      {@required this.id,
+      @required this.name,
+      this.tagline,
+      this.description,
+      @required this.imageURL})
       : assert(id != null),
         assert(name != null),
         assert(imageURL != null);

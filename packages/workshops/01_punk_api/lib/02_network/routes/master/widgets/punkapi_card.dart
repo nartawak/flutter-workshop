@@ -13,12 +13,12 @@ class PunkApiCard extends StatelessWidget {
     return Container(
       height: 100,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey,
-            offset: Offset(0.0, 1.0), //(x,y)
+            offset: const Offset(0.0, 1.0),
             blurRadius: 6.0,
           ),
         ],
