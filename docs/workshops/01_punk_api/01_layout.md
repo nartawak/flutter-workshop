@@ -193,12 +193,12 @@ Duplicating the same component 10 times is a bit rotten !!! we will therefore cr
 - use this function with `map` operator and `spread operator` to create the column's children
 
 ```dart
-..._mockList()
-    .map(
-      (e) => Container(
-        margin: EdgeInsets.only(bottom: 10),
-        child: PunkApiCard(),
-      ),
-    )
-    .toList()
+children: [
+    Text('Title'),
+    ..._mockList()
+      .map((e) => Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: PunkApiCard(),
+          ))
+      .toList()],
 ```
