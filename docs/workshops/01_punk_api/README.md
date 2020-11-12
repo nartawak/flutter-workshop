@@ -4,7 +4,7 @@
 
 Create an application that displays the Punk API beers :beers:. This application implements an UX Master/ Detail pattern.
 
-In this workshop, we will only use APIs provided by the Flutter SDK, no external dependencies.
+In this workshop, we will only use APIs provided by the Flutter SDK, no external dependencies except for HTTP call.
 
 ## What will you learn ?
 

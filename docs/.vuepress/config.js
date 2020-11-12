@@ -62,6 +62,7 @@ module.exports = {
                 children: [
                   "/workshops/01_punk_api/00_initial",
                   "/workshops/01_punk_api/01_layout",
+                  "/workshops/01_punk_api/02_network",
                 ],
               },
             ],
