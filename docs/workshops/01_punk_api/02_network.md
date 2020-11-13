@@ -37,7 +37,7 @@ dependencies:
 In the YAML format, the indentation is important, if you don't respect it you will have errors.
 :::
 
-- fetch third party package, either via yout IDE or in command line
+- fetch third party package, either via your IDE or in command line
 
 ```shell script
 flutter pub get
