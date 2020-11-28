@@ -5,6 +5,9 @@
   </a>
   <a href="https://travis-ci.com/nartawak/flutter-workshop">
     <img src="https://travis-ci.com/nartawak/flutter-workshop.svg?branch=master" alt="Build Status">
+  </a> 
+  <a href="https://github.com/nartawak/flutter-workshop">
+    <img src="https://github.com/nartawak/flutter-workshop/workflows/flutter_workshops/badge.svg" alt="Build Status">
   </a>
   <a href="https://greenkeeper.io/">
     <img src="https://badges.greenkeeper.io/nartawak/flutter-workshop.svg" alt="Greenkeeper badge">
