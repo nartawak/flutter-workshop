@@ -1,24 +1,27 @@
-name: Build
+name: flutter_workshops
 
 on:
   push:
     branches:
       - master
+    path:
+      - ".github/workflows/flutter_workshops.yml"
+      - "packages/workshops/01_punk_api/**"
   pull_request:
     branches:
       - master
+    path:
+      - ".github/workflows/flutter_workshops.yml"
+      - "packages/workshops/01_punk_api/**"
 
 jobs:
-
-  build_flutter_packages:
+  flutter_workshops_samples:
     runs-on: ubuntu-latest
-
+    fail-fast: false
     strategy:
       matrix:
-        package: [
-        ]
+        package: ["packages/workshops/01_punk_api"]
         channel: ["stable"]
-
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
@@ -43,3 +46,9 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: ${{ matrix.package }}
           file: ./${{ matrix.package }}/coverage/lcov.info
+  build:
+    needs: [flutter_workshops_samples]
+    runs-on: ubuntu-latest
+    steps:
+      - name: noop
+        run: echo 'noop'
