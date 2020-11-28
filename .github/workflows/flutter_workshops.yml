@@ -17,7 +17,6 @@ on:
 jobs:
   flutter_workshops_samples:
     runs-on: ubuntu-latest
-    fail-fast: false
     strategy:
       matrix:
         package: ["packages/workshops/01_punk_api"]
