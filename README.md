@@ -9,6 +9,9 @@
   <a href="https://github.com/nartawak/flutter-workshop">
     <img src="https://github.com/nartawak/flutter-workshop/workflows/flutter_workshops/badge.svg" alt="Build Status">
   </a>
+  <a href="https://codecov.io/gh/nartawak/flutter-workshop">
+    <img src="https://codecov.io/gh/nartawak/flutter-workshop/branch/master/graph/badge.svg?token=P00K6PNBXZ"/>
+  </a>
   <a href="https://greenkeeper.io/">
     <img src="https://badges.greenkeeper.io/nartawak/flutter-workshop.svg" alt="Greenkeeper badge">
   </a>
