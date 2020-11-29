@@ -45,6 +45,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: ${{ matrix.package }}
           file: ./${{ matrix.package }}/coverage/lcov.info
+          verbose: true
   build:
     needs: [flutter_workshops_samples]
     runs-on: ubuntu-latest

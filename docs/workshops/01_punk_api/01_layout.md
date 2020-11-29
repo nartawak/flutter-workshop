@@ -202,3 +202,24 @@ children: [
           ))
       .toList()],
 ```
+
+## Update the current test
+
+in a terminal, run the `flutter test` that should fail! (you can also run the test file via the IDE)
+
+- update the description of the test: `should display 10 PunkApiCard widgets children of SingleChildScrollView`
+
+- test the following
+  - expect one widget `SingleChildScrollView`
+  - expect 10 widgets `PunkApiCard` which must be children's widgets from `SingleChildScrollView`
+
+::: tip Find widgets
+
+As mentioned in [cookbook documentation](https://flutter.dev/docs/cookbook/testing/widget/finders), the `flutter_test` package
+provides the `find` constant which is an implementation of [CommonFinders](https://api.flutter.dev/flutter/flutter_test/CommonFinders-class.html) object.
+
+This `find` constant allows targeting widgets with many methods.
+
+In our case, you can use the `byType` method to target the `SingleChildScrollView` widget and the `descendant` method to target `PunkApiCard` widgets, children of `SingleChildScrollView`
+
+:::
