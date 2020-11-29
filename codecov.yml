@@ -3,15 +3,12 @@ coverage:
   status:
     project:
       default: off
-      basic_layout_starter:
-        flags: basic_layout_starter
+      01_punk_api:
+        flags: packages/workshops/01_punk_api
       basic_layout_solution:
         flags: basic_layout_solution
 
 flags:
-  basic_layout_starter:
+  packages/workshops/01_punk_api:
     paths:
-      - packages/basic_layout/basic_layout_starter
-  basic_layout_solution:
-    paths:
-      - packages/basic_layout/basic_layout_solution
+      - packages/workshops/01_punk_api
