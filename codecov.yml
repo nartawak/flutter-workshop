@@ -5,8 +5,6 @@ coverage:
       default: off
       01_punk_api:
         flags: packages/workshops/01_punk_api
-      basic_layout_solution:
-        flags: basic_layout_solution
 
 flags:
   packages/workshops/01_punk_api:
