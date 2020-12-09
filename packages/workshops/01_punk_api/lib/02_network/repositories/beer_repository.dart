@@ -2,18 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:punk_api/02_network/exceptions/custom_exceptions.dart';
 import 'package:punk_api/02_network/models/beer.dart';
-
-class FetchDataException implements Exception {
-  final _message;
-  final _prefix = 'Error during HTTP call: ';
-
-  FetchDataException([this._message]);
-
-  String toString() {
-    return "$_prefix$_message";
-  }
-}
 
 @immutable
 class BeersRepository {
