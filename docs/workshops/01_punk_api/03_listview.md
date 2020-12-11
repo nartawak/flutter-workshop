@@ -6,11 +6,10 @@ The main goal of this step is to start manipulating layout widgets, refactoring 
 
 You are going to:
 
-- use `http` package to make API call
-- decode Json data
 - use `StatefulWidget` and lifecycle hooks
 - use `FutureBuilder` to display UI base on `Future`
 - use `ListView` widget
+- test a more complex widget
 
 At the end of this step, you will have built this :point_down:
 
@@ -24,7 +23,7 @@ At the end of this step, you will have built this :point_down:
 
 <figure style="text-align: center;">
     <img src="./resources/02_network_stateful_widget_lifecycle.png" alt="02_network_stateful_widget_lifecycle.png" style="display: inline;width: 100%"/>
-</figure>
+</figure>K
 
 ## Approaches for fetching asynchronous data
 

@@ -5,15 +5,21 @@ import 'package:meta/meta.dart';
 import 'package:punk_api/02_network/exceptions/custom_exceptions.dart';
 import 'package:punk_api/02_network/models/beer.dart';
 
+const kApiBaseUrl = 'https://api.punkapi.com/v2';
+const kBeerResource = 'beer';
+
 @immutable
 class BeersRepository {
   final http.Client client;
 
   BeersRepository({@required this.client}) : assert(client != null);
 
-  Future<List<Beer>> getBeers() async {
-    final response =
-        await client.get('https://api.punkapi.com/v2/beers?page=1&per_page=80');
+  Future<List<Beer>> getBeers({
+    int pageNumber = 1,
+    int itemsPerPage = 10,
+  }) async {
+    final response = await client.get(
+        '$kApiBaseUrl/$kBeerResource?page=$pageNumber&per_page=$itemsPerPage');
 
     if (response.statusCode != 200) {
       throw FetchDataException(

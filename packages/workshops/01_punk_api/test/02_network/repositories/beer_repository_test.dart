@@ -16,20 +16,22 @@ void main() {
   });
 
   group('getBeers', () {
-    test('should throw an error when response.statusCode is not 200', () async {
-      when(mockClient
-              .get('https://api.punkapi.com/v2/beers?page=1&per_page=80'))
+    test(
+        'should throw a FetchDataException when response.statusCode is not 200',
+        () async {
+      when(mockClient.get('$kApiBaseUrl/$kBeerResource?page=1&per_page=10'))
           .thenAnswer((_) async => http.Response("mock_body", 400));
 
-      expect(beersRepository.getBeers(),
+      expect(
+          beersRepository.getBeers(),
+          // You can find full list of matchers => https://api.flutter.dev/flutter/package-matcher_matcher/package-matcher_matcher-library.html
           throwsA(predicate((e) => e is FetchDataException)));
     });
 
     test('should return a list of beer with one beer', () async {
       const mockJson =
           "[{\"id\":1,\"name\":\"Buzz\",\"tagline\":\"A Real Bitter Experience.\",\"description\":\"A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.\",\"image_url\":\"https:\/\/images.punkapi.com\/v2\/keg.png\"}]";
-      when(mockClient
-              .get('https://api.punkapi.com/v2/beers?page=1&per_page=80'))
+      when(mockClient.get('$kApiBaseUrl/$kBeerResource?page=1&per_page=10'))
           .thenAnswer((_) async => http.Response(mockJson, 200));
 
       final beers = await beersRepository.getBeers();
