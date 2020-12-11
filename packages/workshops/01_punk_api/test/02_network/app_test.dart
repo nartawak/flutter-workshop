@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:punk_api/01_layout/app.dart';
+import 'package:punk_api/02_network/app.dart';
 
 void main() {
   group('PunkApiApp', () {

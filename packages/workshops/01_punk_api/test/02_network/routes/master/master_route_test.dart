@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:punk_api/02_network/models/beer.dart';
 import 'package:punk_api/02_network/repositories/beer_repository.dart';
 import 'package:punk_api/02_network/routes/master/master_route.dart';
 import 'package:punk_api/02_network/routes/master/widgets/punkapi_card.dart';
 
+// ignore: must_be_immutable
 class MockBeerRepository extends Mock implements BeersRepository {}
 
 void main() {

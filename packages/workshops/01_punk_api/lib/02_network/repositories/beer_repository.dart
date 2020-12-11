@@ -6,7 +6,7 @@ import 'package:punk_api/02_network/exceptions/custom_exceptions.dart';
 import 'package:punk_api/02_network/models/beer.dart';
 
 const kApiBaseUrl = 'https://api.punkapi.com/v2';
-const kBeerResource = 'beer';
+const kBeerResource = 'beers';
 
 @immutable
 class BeersRepository {
