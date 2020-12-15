@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:punk_api/02_network/exceptions/custom_exceptions.dart';
-import 'package:punk_api/02_network/models/beer.dart';
+import 'package:punk_api/03_listview/exceptions/custom_exceptions.dart';
+import 'package:punk_api/03_listview/models/beer.dart';
 
 const kApiBaseUrl = 'https://api.punkapi.com/v2';
 const kBeerResource = 'beers';

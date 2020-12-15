@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:punk_api/02_network/repositories/beer_repository.dart';
-import 'package:punk_api/02_network/routes/master/master_route.dart';
+import 'package:punk_api/03_listview/repositories/beer_repository.dart';
+import 'package:punk_api/03_listview/routes/master/master_route.dart';
 
 class PunkApiApp extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class PunkApiApp extends StatelessWidget {
       //     client: http.Client(),
       //   ),
       // ),
-      home: MasterRoute(
+      home: MasterRouteFutureBuilder(
         beersRepository: BeersRepository(
           client: http.Client(),
         ),
