@@ -14,7 +14,7 @@ class MasterRouteStateful extends StatefulWidget {
 }
 
 class _MasterRouteStatefulState extends State<MasterRouteStateful> {
-  List<Beer> _beers;
+  List<Beer> _beers = [];
   bool _isError = false;
   bool _isLoading = true;
 
@@ -55,7 +55,7 @@ class _MasterRouteStatefulState extends State<MasterRouteStateful> {
 
   void _fetchBeers() async {
     try {
-      final beers = await widget.beersRepository.getBeers();
+      final beers = await widget.beersRepository.getBeers(itemsPerPage: 80);
       setState(() {
         _isError = false;
         _isLoading = false;
@@ -65,7 +65,7 @@ class _MasterRouteStatefulState extends State<MasterRouteStateful> {
       setState(() {
         _isError = true;
         _isLoading = false;
-        _beers = null;
+        _beers = [];
       });
     }
   }
@@ -91,8 +91,9 @@ class MasterRouteFutureBuilder extends StatelessWidget {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: beersRepository.getBeers(),
+        future: beersRepository.getBeers(itemsPerPage: 80),
         builder: (_, snapshot) {
+          print(snapshot);
           if (snapshot.hasError) {
             return Center(
               child: Text('An error occurred'),

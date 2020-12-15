@@ -12,11 +12,7 @@ You are going to:
 - create business objects independent of the graphic layer (widgets tree)
 - test pure dart objects with [Mockito](https://pub.dev/packages/mockito)
 
-At the end of this step, you will have built this :point_down:
-
-<figure style="text-align: center;">
-    <img src="./resources/02_network_goal.gif" alt="02_network_goal.gif" style="display: inline;width: 40%"/>
-</figure>
+At the end of this step, you will have all tests passed for `BeerRepository`
 
 ## HTTP package
 

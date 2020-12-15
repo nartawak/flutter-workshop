@@ -22,8 +22,8 @@ class BeersRepository {
         '$kApiBaseUrl/$kBeerResource?page=$pageNumber&per_page=$itemsPerPage');
 
     if (response.statusCode != 200) {
-      throw FetchDataException(
-          'error occurred when fetch beers from punk API: {$response.statusCode}');
+      return Future.error(FetchDataException(
+          'error occurred when fetch beers from punk API: {$response.statusCode}'));
     }
 
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();

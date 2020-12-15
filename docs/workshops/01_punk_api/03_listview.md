@@ -9,12 +9,12 @@ You are going to:
 - use `StatefulWidget` and lifecycle hooks
 - use `FutureBuilder` to display UI base on `Future`
 - use `ListView` widget
-- test a more complex widget
+- test a more complex widget with asynchronous fetching data
 
 At the end of this step, you will have built this :point_down:
 
 <figure style="text-align: center;">
-    <img src="./resources/02_network_goal.gif" alt="02_network_goal.gif" style="display: inline;width: 40%"/>
+    <img src="./resources/03_listview_goal.gif" alt="03_listview_goal.gif" style="display: inline;width: 40%"/>
 </figure>
 
 ## StatefulWidget
@@ -22,8 +22,8 @@ At the end of this step, you will have built this :point_down:
 > Stateful widgets maintain state that might change during the lifetime of the widget. Implementing a stateful widget requires at least two classes: a StatefulWidget that creates an instance of a State class. The StatefulWidget object is, itself, immutable and can be thrown away and regenerated, but the State object persists over the lifetime of the widget.
 
 <figure style="text-align: center;">
-    <img src="./resources/02_network_stateful_widget_lifecycle.png" alt="02_network_stateful_widget_lifecycle.png" style="display: inline;width: 100%"/>
-</figure>K
+    <img src="./resources/03_listview_stateful_widget_lifecycle.png" alt="03_listview_stateful_widget_lifecycle.png" style="display: inline;width: 100%"/>
+</figure>
 
 ## Approaches for fetching asynchronous data
 
@@ -38,7 +38,7 @@ It is possible to do exactly the same approach with Flutter. **Only the `Statefu
 
 ### use FutureBuilder or StreamBuilder
 
-Flutter offers 2 'builders' widgets that allow you to build a tree of widgets based on asynchronous data.
+Flutter offers 2 builders widgets that allow you to build a tree of widgets based on asynchronous data.
 
 - FutureBuilder takes a Future as an input
 - StreamBuilder takes a Stream as input
@@ -94,7 +94,7 @@ setState(() {
 setState(() {
   _isError = true;
   _isLoading = false;
-  _beers = null;
+  _beers = [];
 });
 ```
 
