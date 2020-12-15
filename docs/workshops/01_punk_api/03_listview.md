@@ -116,6 +116,8 @@ setState(() {
   }
 ```
 
+## PunkApiCard
+
 - open `PunkApiCard` widget
 
 - add Beer as final property, initialize it by constructor, it is required and cannot be null
@@ -147,6 +149,250 @@ Container(
   - beer.tagline
 
 - adjust padding and alignment on the column
+
+## Tests
+
+- Create tests files:
+  - punkapi_card_test.dart
+  - master_route_test.dart
+
+```
+test
+├── app_test.dart
+├── repositories
+│   └── beer_repository_test.dart
+└── routes
+    └── master
+        ├── master_route_test.dart
+        └── widgets
+            └── punkapi_card_test.dart
+
+```
+
+### punkapi_card_test.dart
+
+- add `network_image_mock` dependency in the `dev_dependency` in the **pubspec.yaml**
+
+```yaml
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^4.1.3
+  network_image_mock: ^1.0.2
+```
+
+::: tip
+You need to use this package to test widget that use Image widget
+
+> Since you are here you probably already know that calling Image.network results in 400 response in Flutter widget tests. The reason for this is that default HTTP client in tests always return a 400.
+
+[Learn more](https://pub.dev/packages/network_image_mock)
+:::
+
+```dart
+
+const mockBeerName = 'beer_name';
+const mockBeerTagline = 'beer_tagline';
+final mockBeer = Beer(
+  id: 1,
+  name: mockBeerName,
+  tagline: mockBeerTagline,
+  imageURL: 'https://images.punkapi.com/v2/keg.png',
+);
+
+final cardKey = GlobalKey();
+
+void main() {
+  group('PunkApiCard', () {
+    testWidgets('should display image', (WidgetTester tester) async {
+
+      // to mock Http in test with Image widget
+      mockNetworkImagesFor(() async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: PunkApiCard(
+              key: cardKey,
+              beer: mockBeer,
+            ),
+          ),
+        );
+
+        // you can find widget by key.
+        // since we must wrap PunkApiCard with MaterialApp because it depends on it (see InheritedWidget), you can have a lot of widget in the widget tree.
+        // The target of a widget can be made by type, or via a large number of matchers, but with a key you are sure to target the one you want to test.
+        final cardFinder = find.byKey(cardKey);
+        expect(cardFinder, findsOneWidget);
+
+        expect(
+            // with find.descendant you can target a widget in a particular subtree
+            find.descendant(
+              of: cardFinder,
+              matching: find.byType(Image),
+            ),
+            findsOneWidget);
+      });
+    });
+
+    testWidgets('should display beer name and tagline inside Column',
+        (WidgetTester tester) async {
+      mockNetworkImagesFor(() async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: PunkApiCard(
+              key: cardKey,
+              beer: mockBeer,
+            ),
+          ),
+        );
+
+        final cardFinder = find.byKey(cardKey);
+        expect(cardFinder, findsOneWidget);
+
+        var columnFinder = find.descendant(
+          of: cardFinder,
+          matching: find.byType(Column),
+        );
+        expect(columnFinder, findsOneWidget);
+
+        expect(
+          find.descendant(
+            of: columnFinder,
+            matching: find.text(mockBeerName),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: columnFinder,
+            matching: find.text(mockBeerTagline),
+          ),
+          findsOneWidget,
+        );
+      });
+    });
+  });
+}
+
+```
+
+### master_route_test.dart
+
+```dart
+// ignore: must_be_immutable
+class MockBeerRepository extends Mock implements BeersRepository {}
+
+void main() {
+  BeersRepository beersRepository;
+
+  setUp(() {
+    beersRepository = MockBeerRepository();
+  });
+
+  group('MasterRouteStateful', () {
+    testWidgets(
+        'should call beersRepository.getBeers on initState lifecycle hook',
+        (WidgetTester tester) async {
+      when(
+        beersRepository.getBeers(),
+      ).thenAnswer((_) async => []);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MasterRouteStateful(
+            beersRepository: beersRepository,
+          ),
+        ),
+      );
+
+      verify(
+        beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80),
+      ).called(1);
+    });
+
+    testWidgets(
+        'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
+        (WidgetTester tester) async {
+          // Completer comes from dart:async package and allows to create Future
+      Completer completer = Completer();
+      when(
+        beersRepository.getBeers(),
+      ).thenAnswer((_) => completer.future);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MasterRouteStateful(
+            beersRepository: beersRepository,
+          ),
+        ),
+      );
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets(
+        'should display an error message when beersRepository.getBeers rejects an FetchDataException',
+        (WidgetTester tester) async {
+      when(
+        beersRepository.getBeers(
+          pageNumber: 1,
+          itemsPerPage: 80,
+        ),
+      ).thenAnswer((_) => Future.error(FetchDataException()));
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MasterRouteStateful(
+            beersRepository: beersRepository,
+          ),
+        ),
+      );
+
+      // beersRepository.getBeers Future is resolved after the first call of the build method.
+      // if you need ro recall the build function, to up to date the widget tree, you need to explicitly call pumpAndSettle function before expecting
+      await tester.pumpAndSettle();
+
+      expect(find.text('An error occurred'), findsOneWidget);
+    });
+
+    testWidgets(
+        'should display ListView with 1 PunkApiCard when beersRepository.getBeers resolved with a list of 1 Beer',
+        (WidgetTester tester) async {
+      mockNetworkImagesFor(() async {
+        Completer completer = Completer<List<Beer>>();
+        when(beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80))
+            .thenAnswer((_) => completer.future);
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MasterRouteStateful(
+              beersRepository: beersRepository,
+            ),
+          ),
+        );
+
+        completer.complete([
+          Beer(
+              id: 1,
+              name: 'mock_name',
+              imageURL: 'https://images.punkapi.com/v2/keg.png',
+              tagline: 'mock_tagline'),
+        ]);
+        await tester.pumpAndSettle();
+
+        var listFinder = find.byType(ListView);
+        expect(listFinder, findsOneWidget);
+
+        expect(
+          find.descendant(of: listFinder, matching: find.byType(PunkApiCard)),
+          findsOneWidget,
+        );
+      });
+    });
+  });
+}
+
+```
 
 ## MasterRouteFutureBuilder
 
@@ -185,6 +431,8 @@ Container(
 
 - Replace the Todo, to have the same behavior as with `MasterRouteStateful`
 
+- create the tests for the `MasterRouteFutureBuilder` by taking example from `MasterRouteStateful`
+
 ## ListView
 
 Like mentionned in previous step, `Column` and `SingleChildScrollView` are not designed to display long list, we are going to use ListView which is made for.
@@ -212,5 +460,3 @@ See documention:
 > This constructor is appropriate for list views with a large (or infinite) number of children because the builder is called only for those children that are actually visible.
 
 :::
-
-- in `BeersRepository` update the URL to get 80 items in page `https://api.punkapi.com/v2/beers?page=1&per_page=80`
