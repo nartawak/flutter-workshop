@@ -190,7 +190,7 @@ class FetchDataException implements Exception {
   - the function take 2 arguments (pageNumber and itemsPerPage) with default values
   - use [String interpolation](https://dart.dev/guides/language/language-tour#strings) to create URL to call
   - example of URL: `https://api.punkapi.com/v2/beers?page=1&per_page=10`
-  - when the reponse status code is different from 200, throw an `FetchDataException`
+  - when the reponse status code is different from 200, return `Future.error(FetchDataException('message')`
   - the function must validate the tests provided :point_down:
 
 ::: tip

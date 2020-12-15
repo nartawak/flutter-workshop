@@ -62,14 +62,14 @@ void main() {
     });
 
     testWidgets(
-        'should display an error message when beersRepository.getBeers throws an FetchDataException',
+        'should display an error message when beersRepository.getBeers rejects an FetchDataException',
         (WidgetTester tester) async {
       when(
         beersRepository.getBeers(
           pageNumber: 1,
           itemsPerPage: 80,
         ),
-      ).thenThrow(FetchDataException());
+      ).thenAnswer((_) => Future.error(FetchDataException()));
 
       await tester.pumpWidget(
         MaterialApp(
@@ -78,6 +78,8 @@ void main() {
           ),
         ),
       );
+
+      await tester.pumpAndSettle();
 
       expect(find.text('An error occurred'), findsOneWidget);
     });
@@ -139,7 +141,7 @@ void main() {
     });
 
     testWidgets(
-        'should display an error message when beersRepository.getBeers throws an FetchDataException',
+        'should display an error message when beersRepository.getBeers rejects an FetchDataException',
         (WidgetTester tester) async {
       when(
         beersRepository.getBeers(
