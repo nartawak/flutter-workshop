@@ -19,7 +19,7 @@ function getSideBar(folder, title) {
 module.exports = {
   plugins: {
     sitemap: {
-      hostname: "https://flutter-workshop.netlify.com",
+      hostname: "https://flutter.nartawak.dev",
     },
   },
   locales: {

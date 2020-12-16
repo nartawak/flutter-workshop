@@ -25,11 +25,11 @@
 
 > Flutter workshops to learn concepts, API and best practices
 
-### 🏠 [Homepage](https://flutter-workshop.netlify.com/)
+### 🏠 [Homepage](https://flutter.nartawak.dev)
 
 ## Usage
 
-Just go to https://flutter-workshop.netlify.com/
+Just go to https://flutter.nartawak.dev
 
 ## Author
 
