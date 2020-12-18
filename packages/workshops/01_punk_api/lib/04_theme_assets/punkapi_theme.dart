@@ -33,6 +33,7 @@ final lightTheme = ThemeData(
 final darkTheme = ThemeData(
   primaryColor: Colors.black,
   backgroundColor: Colors.black87,
+  shadowColor: Colors.white,
   cardColor: kLightPrimaryColor.withOpacity(0.5),
   visualDensity: VisualDensity.adaptivePlatformDensity,
   textTheme: TextTheme(
