@@ -85,15 +85,37 @@ class MasterRouteFutureBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final image = Image.asset(
+      'assets/images/punkapi.png',
+      height: 40,
+      width: 30,
+      fit: BoxFit.fitHeight,
+    );
+
     return Scaffold(
+      backgroundColor: theme.backgroundColor,
       appBar: AppBar(
-        title: Text('Punk API'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            image,
+            Text(
+              'Punk API',
+              style: const TextStyle(
+                fontFamily: 'Nerko_One',
+                fontSize: 40,
+              ),
+            ),
+            image,
+          ],
+        ),
+        backgroundColor: theme.primaryColor,
         centerTitle: true,
       ),
       body: FutureBuilder(
         future: beersRepository.getBeers(itemsPerPage: 80),
         builder: (_, snapshot) {
-          print(snapshot);
           if (snapshot.hasError) {
             return Center(
               child: Text('An error occurred'),

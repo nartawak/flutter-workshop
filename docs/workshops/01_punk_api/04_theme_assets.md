@@ -16,4 +16,69 @@ At the end of this step, you will have built this :point_down:
 
 ## Assets
 
+```dart
+
+  final image = Image.asset(
+      'assets/images/punkapi.png',
+      height: 40,
+      width: 30,
+      fit: BoxFit.fitHeight,
+    );
+
+  Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            image,
+            Text(
+              'Punk API',
+              style: const TextStyle(
+                fontFamily: 'Nerko_One',
+                fontSize: 40,
+              ),
+            ),
+            image,
+          ],
+        ),
+        centerTitle: true,
+      ),
+    );
+```
+
+```dart
+const labelStyle = TextStyle(
+  fontFamily: 'Roboto',
+);
+```
+
+```dart
+  Text(
+    beer.name,
+    style: labelStyle.copyWith(
+      fontSize: 17,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+```
+
+```dart
+  Text(
+    beer.name,
+    style: labelStyle.copyWith(
+      fontSize: 13,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+```
+
 ## Theme
+
+```xml
+<dict>
+    <key>UIUserInterfaceStyle</key>
+    <string>Dark</string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <true/>
+</dict>
+```

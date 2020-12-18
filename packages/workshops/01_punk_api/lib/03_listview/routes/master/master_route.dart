@@ -93,7 +93,6 @@ class MasterRouteFutureBuilder extends StatelessWidget {
       body: FutureBuilder(
         future: beersRepository.getBeers(itemsPerPage: 80),
         builder: (_, snapshot) {
-          print(snapshot);
           if (snapshot.hasError) {
             return Center(
               child: Text('An error occurred'),
