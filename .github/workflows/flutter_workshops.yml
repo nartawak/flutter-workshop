@@ -7,19 +7,25 @@ on:
     path:
       - ".github/workflows/flutter_workshops.yml"
       - "packages/workshops/01_punk_api/**"
+      - "packages/workshops/02_pull_to_refresh/**"
   pull_request:
     branches:
       - master
     path:
       - ".github/workflows/flutter_workshops.yml"
       - "packages/workshops/01_punk_api/**"
+      - "packages/workshops/02_pull_to_refresh/**"
 
 jobs:
   flutter_workshops_samples:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: ["packages/workshops/01_punk_api"]
+        package:
+          [
+            "packages/workshops/01_punk_api",
+            "packages/workshops/02_pull_to_refresh",
+          ]
         channel: ["stable"]
     steps:
       - uses: actions/checkout@v2

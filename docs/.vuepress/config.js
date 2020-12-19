@@ -52,7 +52,7 @@ module.exports = {
           "/get_started/",
           {
             title: "Workshops",
-            collapsable: false,
+            collapsable: true,
             path: "/workshops/",
             children: [
               {
@@ -65,6 +65,12 @@ module.exports = {
                   "/workshops/01_punk_api/02_network",
                   "/workshops/01_punk_api/03_listview",
                 ],
+              },
+              {
+                title: "Pull to refresh",
+                collapsable: true,
+                path: "/workshops/02_pull_to_refresh/",
+                children: ["/workshops/02_pull_to_refresh/00_initial"],
               },
             ],
           },
