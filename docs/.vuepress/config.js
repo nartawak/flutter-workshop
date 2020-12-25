@@ -70,7 +70,11 @@ module.exports = {
                 title: "Pull to refresh",
                 collapsable: true,
                 path: "/workshops/02_pull_to_refresh/",
-                children: ["/workshops/02_pull_to_refresh/00_initial"],
+                children: [
+                  "/workshops/02_pull_to_refresh/00_initial",
+                  "/workshops/02_pull_to_refresh/01_listview",
+                  "/workshops/02_pull_to_refresh/02_custom_refresh_indicator",
+                ],
               },
             ],
           },
