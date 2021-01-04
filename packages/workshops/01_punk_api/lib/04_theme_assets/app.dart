@@ -12,12 +12,7 @@ class PunkApiApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      // home: MasterRouteStateful(
-      //   beersRepository: BeersRepository(
-      //     client: http.Client(),
-      //   ),
-      // ),
-      home: MasterRouteFutureBuilder(
+      home: MasterRoute(
         beersRepository: BeersRepository(
           client: http.Client(),
         ),

@@ -17,8 +17,9 @@ final cardKey = GlobalKey();
 
 void main() {
   group('PunkApiCard', () {
-    testWidgets('should display image', (WidgetTester tester) async {
-      mockNetworkImagesFor(() async {
+    testWidgets('should golden test the PunkApiCard',
+        (WidgetTester tester) async {
+      await mockNetworkImagesFor(() async {
         await tester.pumpWidget(
           MaterialApp(
             home: PunkApiCard(
@@ -31,52 +32,41 @@ void main() {
         final cardFinder = find.byKey(cardKey);
         expect(cardFinder, findsOneWidget);
 
-        expect(
-            find.descendant(
-              of: cardFinder,
-              matching: find.byType(Image),
-            ),
-            findsOneWidget);
+        await expectLater(cardFinder, matchesGoldenFile('punkapi_card.png'));
       });
     });
+  });
 
-    testWidgets('should display beer name and tagline inside Column',
-        (WidgetTester tester) async {
-      mockNetworkImagesFor(() async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: PunkApiCard(
-              key: cardKey,
-              beer: mockBeer,
-            ),
+  testWidgets('should display beer name and tagline inside Column',
+      (WidgetTester tester) async {
+    mockNetworkImagesFor(() async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: PunkApiCard(
+            key: cardKey,
+            beer: mockBeer,
           ),
-        );
+        ),
+      );
 
-        final cardFinder = find.byKey(cardKey);
-        expect(cardFinder, findsOneWidget);
+      final cardFinder = find.byKey(cardKey);
+      expect(cardFinder, findsOneWidget);
 
-        var columnFinder = find.descendant(
+      expect(
+        find.descendant(
           of: cardFinder,
-          matching: find.byType(Column),
-        );
-        expect(columnFinder, findsOneWidget);
+          matching: find.text(mockBeerName),
+        ),
+        findsOneWidget,
+      );
 
-        expect(
-          find.descendant(
-            of: columnFinder,
-            matching: find.text(mockBeerName),
-          ),
-          findsOneWidget,
-        );
-
-        expect(
-          find.descendant(
-            of: columnFinder,
-            matching: find.text(mockBeerTagline),
-          ),
-          findsOneWidget,
-        );
-      });
+      expect(
+        find.descendant(
+          of: cardFinder,
+          matching: find.text(mockBeerTagline),
+        ),
+        findsOneWidget,
+      );
     });
   });
 }

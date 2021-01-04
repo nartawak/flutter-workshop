@@ -28,12 +28,14 @@ The more static assets you have, more the size of the application will grow. You
 
 ### Images
 
-For now, we have displayed images from the Rest API with the widget `Image.network('url')`.
+For now, we have displayed images from the Rest API with the widget `Image.network('url')`. Now, we are going to use
+`Image.asset` to display embedded image.
 
 - download this image
   <a download="punkapi.png" href="/04_theme_assets_download/images/punkapi.png" title="punkapi">
   punkapi.png
   </a>
+
 - create a `assets/images` directory and add this image inside
 
 ```
@@ -59,6 +61,11 @@ Adding an asset in the project file structure is not enough to embed an asset in
 in the [documentation](https://flutter.dev/docs/development/ui/assets-and-images#specifying-assets), you need to declare it in the `pubspec.yaml`.
 :::
 
+:::warning
+When adding assets, you need to rerun the Flutter application with command line or your IDE.
+Hot restart or hot reload does not re-trigger a native build of the application. Assets will not be embedded in the application.
+:::
+
 ```yaml
 # ...
 flutter:
@@ -70,7 +77,14 @@ flutter:
 # ...
 ```
 
-- In the `master_route.dart`, update the title of `AppBar` by replacing `Text` widget with a `Row`. Add as children of the `Row`, the following widgets in order:
+In the previous step, we use 2 widgets in the `master_route.dart` file:
+
+- `MasterRouteStateful`
+- `MasterRouteFutureBuilder`
+
+We only keep the `MasterRouteFutureBuilder`, so you can delete `MasterRouteStateful` and rename `MasterRouteFutureBuilder` to `MasterRoute` adn clean the tests
+
+- In the `MasterRoute` widget, update the title of `AppBar` by replacing `Text` widget with a `Row`. Add as children of the `Row`, the following widgets in order:
   - image punkapi.png
   - title
   - image punkapi.png
@@ -85,15 +99,84 @@ final image = Image.asset(
 );
 ```
 
+- add a new test in the `master_route_test.dart` where you can use the golden testing to validate the `AppBar`
+
+::: tip Golden testing
+When you create a test with golden testing, you need to run the `flutter test` command with the `--update-golden` option to generate the png file.
+Each time you modify the widget that you test with golden test, you need to re-run the command with this option to generate a new png.
+
+[Learn more](https://medium.com/flutter-community/flutter-golden-tests-compare-widgets-with-snapshots-27f83f266cea)
+:::
+
+```dart
+testWidgets('should golden test the AppBar', (WidgetTester tester) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      home: MasterRoute(
+        beersRepository: beersRepository,
+      ),
+    ),
+  );
+
+  final appBarFinder = find.byType(AppBar);
+  expect(appBarFinder, findsOneWidget);
+
+  await expectLater(appBarFinder, matchesGoldenFile('app_bar.png'));
+});
+```
+
 ### Fonts
 
-<a download="NerkoOne-Regular.ttf" href="/04_theme_assets_download/fonts/NerkoOne-Regular.ttf" title="NerkoOne-Regular">
-    NerkoOne-Regular
-</a>
-<br/>
-<a download="Roboto-Regular.ttf" href="/04_theme_assets_download/fonts/Roboto-Regular.ttf" title="Roboto-Regular">
-    Roboto-Regular
-</a>
+- download this 2 fonts
+  <a download="NerkoOne-Regular.ttf" href="/04_theme_assets_download/fonts/NerkoOne-Regular.ttf" title="NerkoOne-Regular">
+  NerkoOne-Regular
+  </a>,
+  <a download="Roboto-Regular.ttf" href="/04_theme_assets_download/fonts/Roboto-Regular.ttf" title="Roboto-Regular">
+  Roboto-Regular
+  </a>
+
+- create a `assets/fonts` directory and add these fonts inside
+
+```
+├── README.md
+├── android
+├── assets
+|   ├── fonts
+|   |   ├── NerkoOne-Regular.ttf
+|   |   └── Roboto-Regular.ttf
+|   └── images
+|       └── punkapi.png
+├── build
+├── coverage
+├── ios
+├── lib
+├── pubspec.lock
+├── pubspec.yaml
+├── punk_api.iml
+└── test
+```
+
+- specifying fonts in the `pubspec.yaml`
+
+::: tip
+Like assets, [fonts have to be specifying](https://flutter.dev/docs/cookbook/design/fonts#2-declare-the-font-in-the-pubspec) in pubspec.yaml file.
+
+You can also use the `google_fonts` [package](https://pub.dev/packages/google_fonts) to use front from [fonts.google.com](https://fonts.google.com/) in your project.
+:::
+
+```yaml
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: Nerko_One
+      fonts:
+        - asset: assets/fonts/NerkoOne-Regular.ttf
+```
+
+- use `Nerko_one` font familly like below in the title `Text` widget in the `AppBar`
 
 ```dart
 Text(
@@ -105,31 +188,44 @@ Text(
 );
 ```
 
+- update the golden test, we previously created, it should be failed!!
+
+- open `punkapi_card.dart` file
+
+- use `Roboto` both for the name and the tagline
+  - name must have 17 as fontSize and must be bold
+  - tagline must have 13 as fontSize
+
 ```dart
-const labelStyle = TextStyle(
+// you can create a TextStyle that mutualize common configuration
+const labelStyle = const TextStyle(
   fontFamily: 'Roboto',
 );
 ```
 
 ```dart
-  Text(
+final name = Text(
     beer.name,
+    // use the common TextStyle by creating a new instance and define only specific values
     style: labelStyle.copyWith(
       fontSize: 17,
       fontWeight: FontWeight.bold,
     ),
-  );
+);
 ```
 
 ```dart
-  Text(
+final tagline = Text(
     beer.name,
     style: labelStyle.copyWith(
       fontSize: 13,
-      fontWeight: FontWeight.bold,
     ),
-  );
+);
 ```
+
+- create `should golden test the PunkApiCard` in the `punkapi_card_test.dart` file
+  - generate the png file
+  - delete the `should display image` test, golden test cover this use case
 
 ## Theme
 
