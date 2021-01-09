@@ -111,7 +111,7 @@ Each time you modify the widget that you test with golden test, you need to re-r
 ::: warning Macos users
 If you are a macos user, you need to disable `Use font smoothing when available` in **System preference / General**
 
-[Fond more in this issue](https://github.com/flutter/flutter/issues/56383)
+[Find more in this issue](https://github.com/flutter/flutter/issues/56383)
 :::
 
 ```dart
