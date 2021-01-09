@@ -108,6 +108,12 @@ Each time you modify the widget that you test with golden test, you need to re-r
 [Learn more](https://medium.com/flutter-community/flutter-golden-tests-compare-widgets-with-snapshots-27f83f266cea)
 :::
 
+::: warning Macos users
+If you are a macos user, you need to disable `Use font smoothing when available` in **System preference / General**
+
+[Fond more in this issue](https://github.com/flutter/flutter/issues/56383)
+:::
+
 ```dart
 testWidgets('should golden test the AppBar', (WidgetTester tester) async {
   await tester.pumpWidget(
