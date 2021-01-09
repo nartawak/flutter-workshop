@@ -4,6 +4,8 @@ import 'package:network_image_mock/network_image_mock.dart';
 import 'package:punk_api/04_theme_assets/models/beer.dart';
 import 'package:punk_api/04_theme_assets/routes/master/widgets/punkapi_card.dart';
 
+import '../../../material_app_theme_wrapper.dart';
+
 const mockBeerName = 'beer_name';
 const mockBeerTagline = 'beer_tagline';
 final mockBeer = Beer(
@@ -17,12 +19,12 @@ final cardKey = GlobalKey();
 
 void main() {
   group('PunkApiCard', () {
-    testWidgets('should golden test the PunkApiCard',
+    testWidgets('should golden test the PunkApiCard with light theme',
         (WidgetTester tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(
-          MaterialApp(
-            home: PunkApiCard(
+          getMaterialAppLightThemeWrapper(
+            child: PunkApiCard(
               key: cardKey,
               beer: mockBeer,
             ),
@@ -32,7 +34,32 @@ void main() {
         final cardFinder = find.byKey(cardKey);
         expect(cardFinder, findsOneWidget);
 
-        await expectLater(cardFinder, matchesGoldenFile('punkapi_card.png'));
+        await expectLater(
+          cardFinder,
+          matchesGoldenFile('punkapi_card_light_theme.png'),
+        );
+      });
+    });
+
+    testWidgets('should golden test the PunkApiCard with dark theme',
+        (WidgetTester tester) async {
+      await mockNetworkImagesFor(() async {
+        await tester.pumpWidget(
+          getMaterialAppDarkThemeWrapper(
+            child: PunkApiCard(
+              key: cardKey,
+              beer: mockBeer,
+            ),
+          ),
+        );
+
+        final cardFinder = find.byKey(cardKey);
+        expect(cardFinder, findsOneWidget);
+
+        await expectLater(
+          cardFinder,
+          matchesGoldenFile('punkapi_card_dark_theme.png'),
+        );
       });
     });
   });
@@ -41,8 +68,8 @@ void main() {
       (WidgetTester tester) async {
     mockNetworkImagesFor(() async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: PunkApiCard(
+        getMaterialAppLightThemeWrapper(
+          child: PunkApiCard(
             key: cardKey,
             beer: mockBeer,
           ),
