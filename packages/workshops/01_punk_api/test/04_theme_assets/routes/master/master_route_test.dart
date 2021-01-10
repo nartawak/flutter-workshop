@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -22,20 +23,22 @@ void main() {
   });
 
   group('MasterRoute', () {
-    testWidgets('should golden test the AppBar', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MasterRoute(
-            beersRepository: beersRepository,
+    if (Platform.isMacOS) {
+      testWidgets('should golden test the AppBar', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MasterRoute(
+              beersRepository: beersRepository,
+            ),
           ),
-        ),
-      );
+        );
 
-      final appBarFinder = find.byType(AppBar);
-      expect(appBarFinder, findsOneWidget);
+        final appBarFinder = find.byType(AppBar);
+        expect(appBarFinder, findsOneWidget);
 
-      await expectLater(appBarFinder, matchesGoldenFile('app_bar.png'));
-    });
+        await expectLater(appBarFinder, matchesGoldenFile('app_bar.png'));
+      });
+    }
 
     testWidgets(
         'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
@@ -19,9 +21,54 @@ final cardKey = GlobalKey();
 
 void main() {
   group('PunkApiCard', () {
-    testWidgets('should golden test the PunkApiCard with light theme',
+    if (Platform.isMacOS) {
+      testWidgets('should golden test the PunkApiCard with light theme',
+          (WidgetTester tester) async {
+        await mockNetworkImagesFor(() async {
+          await tester.pumpWidget(
+            getMaterialAppLightThemeWrapper(
+              child: PunkApiCard(
+                key: cardKey,
+                beer: mockBeer,
+              ),
+            ),
+          );
+
+          final cardFinder = find.byKey(cardKey);
+          expect(cardFinder, findsOneWidget);
+
+          await expectLater(
+            cardFinder,
+            matchesGoldenFile('punkapi_card_light_theme.png'),
+          );
+        });
+      });
+      testWidgets('should golden test the PunkApiCard with dark theme',
+          (WidgetTester tester) async {
+        await mockNetworkImagesFor(() async {
+          await tester.pumpWidget(
+            getMaterialAppDarkThemeWrapper(
+              child: PunkApiCard(
+                key: cardKey,
+                beer: mockBeer,
+              ),
+            ),
+          );
+
+          final cardFinder = find.byKey(cardKey);
+          expect(cardFinder, findsOneWidget);
+
+          await expectLater(
+            cardFinder,
+            matchesGoldenFile('punkapi_card_dark_theme.png'),
+          );
+        });
+      });
+    }
+
+    testWidgets('should display beer name and tagline inside Column',
         (WidgetTester tester) async {
-      await mockNetworkImagesFor(() async {
+      mockNetworkImagesFor(() async {
         await tester.pumpWidget(
           getMaterialAppLightThemeWrapper(
             child: PunkApiCard(
@@ -34,66 +81,22 @@ void main() {
         final cardFinder = find.byKey(cardKey);
         expect(cardFinder, findsOneWidget);
 
-        await expectLater(
-          cardFinder,
-          matchesGoldenFile('punkapi_card_light_theme.png'),
+        expect(
+          find.descendant(
+            of: cardFinder,
+            matching: find.text(mockBeerName),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.descendant(
+            of: cardFinder,
+            matching: find.text(mockBeerTagline),
+          ),
+          findsOneWidget,
         );
       });
-    });
-
-    testWidgets('should golden test the PunkApiCard with dark theme',
-        (WidgetTester tester) async {
-      await mockNetworkImagesFor(() async {
-        await tester.pumpWidget(
-          getMaterialAppDarkThemeWrapper(
-            child: PunkApiCard(
-              key: cardKey,
-              beer: mockBeer,
-            ),
-          ),
-        );
-
-        final cardFinder = find.byKey(cardKey);
-        expect(cardFinder, findsOneWidget);
-
-        await expectLater(
-          cardFinder,
-          matchesGoldenFile('punkapi_card_dark_theme.png'),
-        );
-      });
-    });
-  });
-
-  testWidgets('should display beer name and tagline inside Column',
-      (WidgetTester tester) async {
-    mockNetworkImagesFor(() async {
-      await tester.pumpWidget(
-        getMaterialAppLightThemeWrapper(
-          child: PunkApiCard(
-            key: cardKey,
-            beer: mockBeer,
-          ),
-        ),
-      );
-
-      final cardFinder = find.byKey(cardKey);
-      expect(cardFinder, findsOneWidget);
-
-      expect(
-        find.descendant(
-          of: cardFinder,
-          matching: find.text(mockBeerName),
-        ),
-        findsOneWidget,
-      );
-
-      expect(
-        find.descendant(
-          of: cardFinder,
-          matching: find.text(mockBeerTagline),
-        ),
-        findsOneWidget,
-      );
     });
   });
 }
