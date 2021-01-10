@@ -108,11 +108,38 @@ Each time you modify the widget that you test with golden test, you need to re-r
 [Learn more](https://medium.com/flutter-community/flutter-golden-tests-compare-widgets-with-snapshots-27f83f266cea)
 :::
 
-::: warning Macos users
-If you are a macos user, you need to disable `Use font smoothing when available` in **System preference / General**
+::: warning Golden tests
+You may have differences with the golden tests between your local machine and the continuous integration or even with other
+developers in your team, especially if you use different OSes (linux, macOS, windows).
 
-[Find more in this issue](https://github.com/flutter/flutter/issues/56383)
-:::
+You can prevent these behaviours by using platform-based conditional testing. One can therefore question the relevance of golden
+tests if you use different platforms.
+
+Example of conditional testing
+
+```dart
+import 'dart:io' show Platform;
+
+void main() {
+  group('MasterRoute', ()
+  {
+    if (Platform.isMacOS) {
+      testWidgets('should golden test the AppBar', (WidgetTester tester) async {
+        // ...
+      });
+    }
+  };
+}
+
+```
+
+[Learn more about golden tests](https://github.com/flutter/flutter/wiki/Writing-a-golden-file-test-for-package:flutter)
+
+Issues:
+
+- [Golden files are not consistent between Flutter versions and different OS versions](https://github.com/flutter/flutter/issues/36667)
+- [Golden Test Fails on CI(Same Platform)](https://github.com/flutter/flutter/issues/56383)
+  :::
 
 ```dart
 testWidgets('should golden test the AppBar', (WidgetTester tester) async {
