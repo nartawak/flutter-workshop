@@ -65,6 +65,7 @@ module.exports = {
                   "/workshops/01_punk_api/02_network",
                   "/workshops/01_punk_api/03_listview",
                   "/workshops/01_punk_api/04_theme_assets",
+                  "/workshops/01_punk_api/05_navigation",
                 ],
               },
             ],
