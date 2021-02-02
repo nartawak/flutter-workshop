@@ -2,7 +2,7 @@
 
 ## Goal
 
-The main goal of this step is to start manipulating embedded assets (images, fonts), and themes (light and dark) used by material widgets
+The main goal of this step is to start using Navigation API v1.0 to navigate between routes
 
 You are going to:
 
