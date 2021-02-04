@@ -1,60 +1,72 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:punk_api/08_bloc/exceptions/custom_exceptions.dart';
+import 'package:punk_api/08_bloc/blocs/beers/beer_bloc.dart';
 import 'package:punk_api/08_bloc/models/beer.dart';
 import 'package:punk_api/08_bloc/repositories/beer_repository.dart';
 import 'package:punk_api/08_bloc/routes/master/master_route.dart';
 import 'package:punk_api/08_bloc/routes/master/widgets/punkapi_card.dart';
 
 // ignore: must_be_immutable
-class MockBeerRepository extends Mock implements BeersRepository {}
+class MockBeerBloc extends MockBloc<BeerState> implements BeerBloc {}
 
 void main() {
   BeersRepository beersRepository;
+  BeerBloc bloc;
 
   setUp(() {
-    beersRepository = MockBeerRepository();
+    bloc = MockBeerBloc();
   });
 
   group('MasterRoute', () {
     if (Platform.isMacOS) {
       testWidgets('should golden test the AppBar', (WidgetTester tester) async {
+        when(bloc.state).thenReturn(BeerFetchInProgressState());
+        whenListen<BeerState>(
+            bloc, Stream.fromIterable([BeerFetchInProgressState()]));
+
         await tester.pumpWidget(
           MaterialApp(
-            home: MasterRoute(
-              beersRepository: beersRepository,
+            home: BlocProvider(
+              create: (_) => bloc,
+              child: MasterRoute(),
             ),
           ),
         );
 
+        await tester.pump(Duration.zero);
+
         final appBarFinder = find.byType(AppBar);
         expect(appBarFinder, findsOneWidget);
 
-        await expectLater(appBarFinder, matchesGoldenFile('app_bar.png'));
+        expect(appBarFinder, matchesGoldenFile('app_bar.png'));
       });
     }
 
     testWidgets(
         'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
         (WidgetTester tester) async {
-      Completer completer = Completer();
-      when(
-        beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future);
+      when(bloc.state).thenReturn(BeerFetchInProgressState());
+      whenListen<BeerState>(
+          bloc, Stream.fromIterable([BeerFetchInProgressState()]));
 
       await tester.pumpWidget(
         MaterialApp(
-          home: MasterRoute(
-            beersRepository: beersRepository,
+          home: BlocProvider(
+            create: (_) => bloc,
+            child: MasterRoute(),
           ),
         ),
       );
+
+      await tester.pump(Duration.zero);
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
@@ -62,17 +74,14 @@ void main() {
     testWidgets(
         'should display an error message when beersRepository.getBeers rejects an FetchDataException',
         (WidgetTester tester) async {
-      when(
-        beersRepository.getBeers(
-          pageNumber: 1,
-          itemsPerPage: 80,
-        ),
-      ).thenAnswer((_) => Future.error(FetchDataException()));
+      when(bloc.state).thenReturn(BeerFetchInProgressState());
+      whenListen<BeerState>(bloc, Stream.fromIterable([BeerFetchErrorState()]));
 
       await tester.pumpWidget(
         MaterialApp(
-          home: MasterRoute(
-            beersRepository: beersRepository,
+          home: BlocProvider(
+            create: (_) => bloc,
+            child: MasterRoute(),
           ),
         ),
       );
@@ -86,26 +95,33 @@ void main() {
         'should display ListView with 1 PunkApiCard when beersRepository.getBeers resolved with a list of 1 Beer',
         (WidgetTester tester) async {
       mockNetworkImagesFor(() async {
-        Completer completer = Completer<List<Beer>>();
-        when(beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80))
-            .thenAnswer((_) => completer.future);
+        when(bloc.state).thenReturn(BeerFetchInProgressState());
+        whenListen<BeerState>(
+            bloc,
+            Stream.fromIterable(
+              [
+                BeerFetchSuccessState(
+                  beers: [
+                    Beer(
+                        id: 1,
+                        name: 'mock_name',
+                        imageURL: 'https://images.punkapi.com/v2/keg.png',
+                        tagline: 'mock_tagline'),
+                  ],
+                ),
+              ],
+            ));
 
         await tester.pumpWidget(
           MaterialApp(
-            home: MasterRoute(
-              beersRepository: beersRepository,
+            home: BlocProvider(
+              create: (_) => bloc,
+              child: MasterRoute(),
             ),
           ),
         );
 
-        completer.complete([
-          Beer(
-              id: 1,
-              name: 'mock_name',
-              imageURL: 'https://images.punkapi.com/v2/keg.png',
-              tagline: 'mock_tagline'),
-        ]);
-        await tester.pumpAndSettle();
+        await tester.pump(Duration.zero);
 
         var listFinder = find.byType(ListView);
         expect(listFinder, findsOneWidget);

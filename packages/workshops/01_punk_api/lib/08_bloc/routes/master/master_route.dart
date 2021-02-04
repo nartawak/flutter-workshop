@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:punk_api/08_bloc/repositories/beer_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:punk_api/08_bloc/blocs/blocs.dart';
 import 'package:punk_api/08_bloc/routes/detail/detail_route.dart';
 import 'package:punk_api/08_bloc/routes/master/widgets/punkapi_card.dart';
 
 class MasterRoute extends StatelessWidget {
   static const routeName = '/';
 
-  final BeersRepository beersRepository;
-
-  MasterRoute({@required this.beersRepository})
-      : assert(beersRepository != null);
+  MasterRoute({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,37 +39,42 @@ class MasterRoute extends StatelessWidget {
         backgroundColor: theme.primaryColor,
         centerTitle: true,
       ),
-      body: FutureBuilder(
-        future: beersRepository.getBeers(itemsPerPage: 80),
-        builder: (_, snapshot) {
-          if (snapshot.hasError) {
+      body: BlocBuilder<BeerBloc, BeerState>(
+        builder: (context, state) {
+          if (state is BeerFetchErrorState) {
             return Center(
               child: Text('An error occurred'),
             );
           }
 
-          if (!snapshot.hasData) {
+          if (state is BeerFetchInProgressState) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          final beers = snapshot.data;
+          final beers = (state as BeerFetchSuccessState).beers;
 
-          return ListView.builder(
-            itemCount: beers.length,
-            itemBuilder: (_, index) {
-              return Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: PunkApiCard(
-                  beer: beers[index],
-                  onBeerSelected: (selectedBeer) {
-                    Navigator.pushNamed(context, DetailRoute.routeName,
-                        arguments: selectedBeer);
-                  },
-                ),
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<BeerBloc>()..add(FetchBeersEvent());
+              return;
             },
+            child: ListView.builder(
+              itemCount: beers.length,
+              itemBuilder: (_, index) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: PunkApiCard(
+                    beer: beers[index],
+                    onBeerSelected: (selectedBeer) {
+                      Navigator.pushNamed(context, DetailRoute.routeName,
+                          arguments: selectedBeer);
+                    },
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
