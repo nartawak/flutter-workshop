@@ -6,7 +6,7 @@ class DetailRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Beer beer = ModalRoute.of(context).settings.arguments;
+    final Beer beer = ModalRoute.of(context)!.settings.arguments as Beer;
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -40,7 +40,7 @@ class DetailRoute extends StatelessWidget {
                     horizontal: 20,
                   ),
                   child: Text(
-                    beer.tagline,
+                    beer.tagline!,
                     style: theme.textTheme.headline5,
                     textAlign: TextAlign.center,
                   ),
@@ -53,7 +53,7 @@ class DetailRoute extends StatelessWidget {
                     horizontal: 20,
                   ),
                   child: Text(
-                    beer.description,
+                    beer.description!,
                     style: theme.textTheme.bodyText1,
                     textAlign: TextAlign.justify,
                   ),

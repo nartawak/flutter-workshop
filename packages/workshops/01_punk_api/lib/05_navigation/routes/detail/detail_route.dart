@@ -29,7 +29,7 @@ class DetailRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Beer beer = ModalRoute.of(context).settings.arguments;
+    final Beer beer = ModalRoute.of(context)!.settings.arguments as Beer;
 
     return Scaffold(
       appBar: AppBar(
