@@ -5,7 +5,7 @@ import 'package:punk_api/04_theme_assets/routes/master/widgets/punkapi_card.dart
 class MasterRoute extends StatelessWidget {
   final BeersRepository beersRepository;
 
-  MasterRoute({@required this.beersRepository})
+  MasterRoute({required this.beersRepository})
       : assert(beersRepository != null);
 
   @override
@@ -56,7 +56,7 @@ class MasterRoute extends StatelessWidget {
           final beers = snapshot.data;
 
           return ListView.builder(
-            itemCount: beers.length,
+            itemCount: (beers as List).length,
             itemBuilder: (_, index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 10),

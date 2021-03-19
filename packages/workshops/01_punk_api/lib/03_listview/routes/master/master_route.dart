@@ -6,7 +6,7 @@ import 'package:punk_api/03_listview/routes/master/widgets/punkapi_card.dart';
 class MasterRouteStateful extends StatefulWidget {
   final BeersRepository beersRepository;
 
-  MasterRouteStateful({@required this.beersRepository})
+  MasterRouteStateful({required this.beersRepository})
       : assert(beersRepository != null);
 
   @override
@@ -14,7 +14,7 @@ class MasterRouteStateful extends StatefulWidget {
 }
 
 class _MasterRouteStatefulState extends State<MasterRouteStateful> {
-  List<Beer> _beers = [];
+  List<Beer>? _beers = [];
   bool _isError = false;
   bool _isLoading = true;
 
@@ -32,11 +32,11 @@ class _MasterRouteStatefulState extends State<MasterRouteStateful> {
     }
 
     return ListView.builder(
-      itemCount: _beers.length,
+      itemCount: _beers!.length,
       itemBuilder: (_, index) {
         return Container(
           margin: EdgeInsets.only(bottom: 10),
-          child: PunkApiCard(beer: _beers[index]),
+          child: PunkApiCard(beer: _beers![index]),
         );
       },
     );
@@ -80,7 +80,7 @@ class _MasterRouteStatefulState extends State<MasterRouteStateful> {
 class MasterRouteFutureBuilder extends StatelessWidget {
   final BeersRepository beersRepository;
 
-  MasterRouteFutureBuilder({@required this.beersRepository})
+  MasterRouteFutureBuilder({required this.beersRepository})
       : assert(beersRepository != null);
 
   @override
@@ -108,7 +108,7 @@ class MasterRouteFutureBuilder extends StatelessWidget {
           final beers = snapshot.data;
 
           return ListView.builder(
-            itemCount: beers.length,
+            itemCount: (beers as List).length,
             itemBuilder: (_, index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 10),
