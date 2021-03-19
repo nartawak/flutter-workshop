@@ -7,11 +7,11 @@ class PunkApiCard extends StatelessWidget {
   static const gestureDetectorKey = Key('gestureDetectorKey');
 
   final Beer beer;
-  final SelectedBeer onBeerSelected;
+  final SelectedBeer? onBeerSelected;
 
   const PunkApiCard({
-    Key key,
-    @required this.beer,
+    Key? key,
+    required this.beer,
     this.onBeerSelected,
   })  : assert(beer != null),
         super(key: key);
@@ -24,7 +24,7 @@ class PunkApiCard extends StatelessWidget {
       key: gestureDetectorKey,
       onTap: () {
         if (onBeerSelected != null) {
-          onBeerSelected(beer);
+          onBeerSelected!(beer);
         }
       },
       child: Container(
@@ -62,7 +62,7 @@ class PunkApiCard extends StatelessWidget {
                       style: theme.textTheme.headline6,
                     ),
                     Text(
-                      beer.tagline,
+                      beer.tagline!,
                       style: theme.textTheme.subtitle1,
                     ),
                   ],

@@ -102,7 +102,7 @@ void main() {
     testWidgets('should call onBeerSelected when tapped',
         (WidgetTester tester) async {
       mockNetworkImagesFor(() async {
-        Beer selectedBeerResult;
+        Beer? selectedBeerResult;
 
         await tester.pumpWidget(
           getMaterialAppLightThemeWrapper(

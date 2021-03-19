@@ -15,7 +15,7 @@ import 'package:punk_api/03_listview/routes/master/widgets/punkapi_card.dart';
 class MockBeerRepository extends Mock implements BeersRepository {}
 
 void main() {
-  BeersRepository beersRepository;
+  late BeersRepository beersRepository;
 
   setUp(() {
     beersRepository = MockBeerRepository();
@@ -48,7 +48,7 @@ void main() {
       Completer completer = Completer();
       when(
         beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future);
+      ).thenAnswer((_) => completer.future as Future<List<Beer>?>);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -90,7 +90,7 @@ void main() {
       mockNetworkImagesFor(() async {
         Completer completer = Completer<List<Beer>>();
         when(beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80))
-            .thenAnswer((_) => completer.future);
+            .thenAnswer((_) => completer.future as Future<List<Beer>?>);
 
         await tester.pumpWidget(
           MaterialApp(
@@ -127,7 +127,7 @@ void main() {
       Completer completer = Completer();
       when(
         beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future);
+      ).thenAnswer((_) => completer.future as Future<List<Beer>?>);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -169,7 +169,7 @@ void main() {
       mockNetworkImagesFor(() async {
         Completer completer = Completer<List<Beer>>();
         when(beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80))
-            .thenAnswer((_) => completer.future);
+            .thenAnswer((_) => completer.future as Future<List<Beer>?>);
 
         await tester.pumpWidget(
           MaterialApp(
