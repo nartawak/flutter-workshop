@@ -4,7 +4,7 @@ import 'package:punk_api/03_listview/models/beer.dart';
 class PunkApiCard extends StatelessWidget {
   final Beer beer;
 
-  const PunkApiCard({Key key, @required this.beer})
+  const PunkApiCard({Key? key, required this.beer})
       : assert(beer != null),
         super(key: key);
 
@@ -38,7 +38,7 @@ class PunkApiCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(beer.name),
-                  Text(beer.tagline),
+                  Text(beer.tagline!),
                 ],
               ),
             ),

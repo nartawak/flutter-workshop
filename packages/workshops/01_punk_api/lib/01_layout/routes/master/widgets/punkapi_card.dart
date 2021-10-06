@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PunkApiCard extends StatelessWidget {
   const PunkApiCard({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

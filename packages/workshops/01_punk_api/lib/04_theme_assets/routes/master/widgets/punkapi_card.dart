@@ -5,8 +5,8 @@ class PunkApiCard extends StatelessWidget {
   final Beer beer;
 
   const PunkApiCard({
-    Key key,
-    @required this.beer,
+    Key? key,
+    required this.beer,
   })  : assert(beer != null),
         super(key: key);
 
@@ -46,7 +46,7 @@ class PunkApiCard extends StatelessWidget {
                     style: theme.textTheme.headline6,
                   ),
                   Text(
-                    beer.tagline,
+                    beer.tagline!,
                     style: theme.textTheme.subtitle1,
                   ),
                 ],

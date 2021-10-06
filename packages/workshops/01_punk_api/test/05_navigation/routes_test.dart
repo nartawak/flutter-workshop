@@ -21,15 +21,15 @@ final _mockBeer = Beer(
 
 void main() {
   group('Navigation', () {
-    NavigatorObserver _mockObserver;
-    MaterialApp _mockMaterialApp;
+    NavigatorObserver? _mockObserver;
+    late MaterialApp _mockMaterialApp;
 
     setUp(() {
       _mockObserver = MockNavigatorObserver();
       _mockMaterialApp = MaterialApp(
         title: 'Flutter Demo',
         navigatorKey: _mockNavigatorKey,
-        navigatorObservers: [_mockObserver],
+        navigatorObservers: [_mockObserver!],
         initialRoute: MasterRoute.routeName,
         routes: {
           MasterRoute.routeName: (_) => MasterRoute(
@@ -47,23 +47,23 @@ void main() {
       await tester.pumpWidget(_mockMaterialApp);
 
       expect(find.byType(MasterRoute), findsOneWidget);
-      verify(_mockObserver.didPush(any, any));
+      verify(_mockObserver!.didPush(any!, any));
     });
 
     testWidgets('should navigate on DetailRoute', (WidgetTester tester) async {
       await tester.pumpWidget(_mockMaterialApp);
 
       // MasterRoute
-      verify(_mockObserver.didPush(any, any));
+      verify(_mockObserver!.didPush(any!, any));
 
-      _mockNavigatorKey.currentState
+      _mockNavigatorKey.currentState!
           .pushNamed(DetailRoute.routeName, arguments: _mockBeer);
 
       await tester.pumpAndSettle();
 
       expect(find.byType(DetailRoute), findsOneWidget);
       expect(find.text(_mockBeerName), findsOneWidget);
-      verify(_mockObserver.didPush(any, any));
+      verify(_mockObserver!.didPush(any!, any));
     });
   });
 }

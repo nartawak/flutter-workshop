@@ -10,7 +10,7 @@ import 'package:punk_api/02_network/routes/master/widgets/punkapi_card.dart';
 class MockBeerRepository extends Mock implements BeersRepository {}
 
 void main() {
-  BeersRepository beersRepository;
+  late BeersRepository beersRepository;
 
   setUp(() {
     beersRepository = MockBeerRepository();
