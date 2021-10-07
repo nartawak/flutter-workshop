@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:punk_api/02_network/repositories/beer_repository.dart';
 import 'package:punk_api/02_network/routes/master/master_route.dart';
 import 'package:punk_api/02_network/routes/master/widgets/punkapi_card.dart';
 
-// ignore: must_be_immutable
-class MockBeerRepository extends Mock implements BeersRepository {}
+import 'master_route_test.mocks.dart';
 
+@GenerateMocks([BeersRepository])
 void main() {
   late BeersRepository beersRepository;
 
   setUp(() {
-    beersRepository = MockBeerRepository();
+    beersRepository = MockBeersRepository();
   });
 
   group('MasterRoute', () {

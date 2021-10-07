@@ -12,13 +12,16 @@ const kBeerResource = '/v2/beers';
 class BeersRepository {
   final http.Client client;
 
-  BeersRepository({required this.client}) : assert(client != null);
+  BeersRepository({required this.client});
 
   Future<List<Beer>?> getBeers({
     int pageNumber = 1,
     int itemsPerPage = 10,
   }) async {
-    var urlToCall = Uri.https('$kApiBaseUrl', '$kBeerResource', {'page': '$pageNumber','per_page': '$itemsPerPage' });
+    var urlToCall = Uri.https('$kApiBaseUrl', '$kBeerResource', {
+      'page': '$pageNumber',
+      'per_page': '$itemsPerPage',
+    });
     final response = await client.get(urlToCall);
 
     if (response.statusCode != 200) {

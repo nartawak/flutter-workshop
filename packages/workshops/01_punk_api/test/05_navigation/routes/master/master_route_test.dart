@@ -4,27 +4,35 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:punk_api/05_navigation/exceptions/custom_exceptions.dart';
-import 'package:punk_api/05_navigation/models/beer.dart';
-import 'package:punk_api/05_navigation/repositories/beer_repository.dart';
-import 'package:punk_api/05_navigation/routes/master/master_route.dart';
-import 'package:punk_api/05_navigation/routes/master/widgets/punkapi_card.dart';
+import 'package:punk_api/04_theme_assets/exceptions/custom_exceptions.dart';
+import 'package:punk_api/04_theme_assets/models/beer.dart';
+import 'package:punk_api/04_theme_assets/repositories/beer_repository.dart';
+import 'package:punk_api/04_theme_assets/routes/master/master_route.dart';
+import 'package:punk_api/04_theme_assets/routes/master/widgets/punkapi_card.dart';
 
-// ignore: must_be_immutable
-class MockBeerRepository extends Mock implements BeersRepository {}
+import 'master_route_test.mocks.dart';
 
+@GenerateMocks([BeersRepository])
 void main() {
   late BeersRepository beersRepository;
 
   setUp(() {
-    beersRepository = MockBeerRepository();
+    beersRepository = MockBeersRepository();
   });
 
   group('MasterRoute', () {
     if (Platform.isMacOS) {
       testWidgets('should golden test the AppBar', (WidgetTester tester) async {
+        when(
+          beersRepository.getBeers(
+            pageNumber: 1,
+            itemsPerPage: 80,
+          ),
+        ).thenAnswer((_) => Future.value([]));
+
         await tester.pumpWidget(
           MaterialApp(
             home: MasterRoute(
@@ -43,10 +51,13 @@ void main() {
     testWidgets(
         'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
         (WidgetTester tester) async {
-      Completer completer = Completer();
+      Completer completer = Completer<List<Beer>>();
       when(
-        beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future as Future<List<Beer>?>);
+        beersRepository.getBeers(
+          pageNumber: 1,
+          itemsPerPage: 80,
+        ),
+      ).thenAnswer((_) => completer.future as Future<List<Beer>>);
 
       await tester.pumpWidget(
         MaterialApp(

@@ -8,8 +8,7 @@ class MasterRoute extends StatelessWidget {
 
   final BeersRepository beersRepository;
 
-  MasterRoute({required this.beersRepository})
-      : assert(beersRepository != null);
+  MasterRoute({required this.beersRepository});
 
   @override
   Widget build(BuildContext context) {

@@ -5,8 +5,7 @@ import 'package:punk_api/02_network/routes/master/widgets/punkapi_card.dart';
 class MasterRoute extends StatefulWidget {
   final BeersRepository beersRepository;
 
-  MasterRoute({required this.beersRepository})
-      : assert(beersRepository != null);
+  MasterRoute({required this.beersRepository});
 
   @override
   _MasterRouteState createState() => _MasterRouteState();

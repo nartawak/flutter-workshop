@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:punk_api/03_listview/exceptions/custom_exceptions.dart';
@@ -11,14 +12,14 @@ import 'package:punk_api/03_listview/repositories/beer_repository.dart';
 import 'package:punk_api/03_listview/routes/master/master_route.dart';
 import 'package:punk_api/03_listview/routes/master/widgets/punkapi_card.dart';
 
-// ignore: must_be_immutable
-class MockBeerRepository extends Mock implements BeersRepository {}
+import 'master_route_test.mocks.dart';
 
+@GenerateMocks([BeersRepository])
 void main() {
   late BeersRepository beersRepository;
 
   setUp(() {
-    beersRepository = MockBeerRepository();
+    beersRepository = MockBeersRepository();
   });
 
   group('MasterRouteStateful', () {
@@ -45,10 +46,13 @@ void main() {
     testWidgets(
         'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
         (WidgetTester tester) async {
-      Completer completer = Completer();
+      Completer completer = Completer<List<Beer>>();
       when(
-        beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future as Future<List<Beer>?>);
+        beersRepository.getBeers(
+          pageNumber: 1,
+          itemsPerPage: 80,
+        ),
+      ).thenAnswer((_) => completer.future as Future<List<Beer>>);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -124,10 +128,13 @@ void main() {
     testWidgets(
         'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
         (WidgetTester tester) async {
-      Completer completer = Completer();
+      Completer completer = Completer<List<Beer>>();
       when(
-        beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future as Future<List<Beer>?>);
+        beersRepository.getBeers(
+          pageNumber: 1,
+          itemsPerPage: 80,
+        ),
+      ).thenAnswer((_) => completer.future as Future<List<Beer>>);
 
       await tester.pumpWidget(
         MaterialApp(
