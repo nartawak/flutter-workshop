@@ -7,8 +7,7 @@ class PunkApiCard extends StatelessWidget {
   const PunkApiCard({
     Key? key,
     required this.beer,
-  })  : assert(beer != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

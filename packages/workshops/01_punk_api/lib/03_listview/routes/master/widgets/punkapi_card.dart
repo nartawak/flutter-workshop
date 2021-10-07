@@ -4,9 +4,10 @@ import 'package:punk_api/03_listview/models/beer.dart';
 class PunkApiCard extends StatelessWidget {
   final Beer beer;
 
-  const PunkApiCard({Key? key, required this.beer})
-      : assert(beer != null),
-        super(key: key);
+  const PunkApiCard({
+    Key? key,
+    required this.beer,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

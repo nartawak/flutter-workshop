@@ -13,10 +13,7 @@ class Beer {
       required this.name,
       this.tagline,
       this.description,
-      required this.imageURL})
-      : assert(id != null),
-        assert(name != null),
-        assert(imageURL != null);
+      required this.imageURL});
 
   factory Beer.fromJson(Map<String, dynamic> json) {
     return Beer(

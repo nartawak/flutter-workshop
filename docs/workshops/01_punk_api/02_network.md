@@ -26,7 +26,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.0
 
-  http: ^0.12.2
+  http: ^0.13.4
 ```
 
 ::: warning
@@ -81,8 +81,9 @@ example of URL we are going to use: `https://api.punkapi.com/v2/beers?page=1&per
 - create a class `Beer`
 
   - use named parameters
-  - `id` `name` and `imageUrl` are required and cannot be null
-  - decorate this class as immutable
+  - `id` `name` and `imageUrl` are required and cannot be nullable
+  - `tagline` and `description` are optional and can be nullable
+  - decorate this class as immutable 👉 `import 'package:meta/meta.dart';`
 
 Example:
 
@@ -98,20 +99,22 @@ If you look at the Flutter SDK code, you will find many examples ([Widget](https
 ```dart
 @immutable
 class User {
-  final String name;
+  final String firstname;
+  final String? lastname;
 
-  User({@required this.name}): assert(name != null);
+  User({required this.firstname, this.lastname});
 
-  User copyWith({String name}) {
+  User copyWith({String? firstname, String? lastname}) {
     return User(
-      name: name ?? this.name,
+      firstname: firstname ?? this.firstname,
+      lastname: lastname ?? this.lastname,
     );
   }
 }
 
 void main() {
-  var user = User(name: 'Nartawak');
-  var updatedUser = user.copyWith(name: 'updated');
+  var user = User(firstname: 'Nartawak');
+  var updatedUser = user.copyWith(firstname: 'updated');
 }
 ```
 
@@ -188,9 +191,8 @@ class FetchDataException implements Exception {
 
 - expose a function `getBeers`
   - the function take 2 arguments (pageNumber and itemsPerPage) with default values
-  - use [String interpolation](https://dart.dev/guides/language/language-tour#strings) to create URL to call
   - example of URL: `https://api.punkapi.com/v2/beers?page=1&per_page=10`
-  - when the reponse status code is different from 200, return `Future.error(FetchDataException('message')`
+  - when the response status code is different from 200, return `Future.error(FetchDataException('message')`
   - the function must validate the tests provided :point_down:
 
 ::: tip
@@ -220,51 +222,94 @@ All the test files should be in the `test` folder, however I keep the same tree 
 
 :::
 
+## test BeerRepository file
+
+You need to install 2 packages as `dev_dependencies` to test this file:
+
+- [build_runner](https://pub.dev/packages/build_runner): A build system for Dart code generation and modular compilation.
+- [mockito](https://pub.dev/packages?q=mockito): A mock framework inspired by Mockito (Java) with APIs for Fakes, Mocks, behavior verification, and stubbing.
+
+:::tip
+
+Since `mockito` use code generation with `build_runner` package, you need to generate the `*.mocks.dart` files.
+You can generate it like this:
+
+```shell
+# run build one time
+flutter pub run build_runner build --delete-conflicting-outputs
+
+# run a watch process, every time you save a file, the process will run
+flutter pub run build_runner watch --delete-conflicting-outputs
+```
+
+:::
+
 ```dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:punk_api/02_network/exceptions/custom_exceptions.dart';
+import 'package:punk_api/02_network/repositories/beer_repository.dart';
 
-// Create a mock for controlling the behavior of http.Client
-class MockHttpClient extends Mock implements http.Client {}
+// Import the generated file
+import 'beer_repository_test.mocks.dart';
 
+@GenerateMocks([Client])
 void main() {
-  http.Client mockClient;
-  BeersRepository beersRepository;
+  late Client mockClient;
+  late BeersRepository beersRepository;
+  var urlToCall = Uri.https(
+    '$kApiBaseUrl',
+    '$kBeerResource',
+    {'page': '1', 'per_page': '10'},
+  );
 
-  // Before each test, the setUp function is called to initialize class fields in our case
   setUp(() {
-    mockClient = MockHttpClient();
+    mockClient = MockClient();
     beersRepository = BeersRepository(client: mockClient);
   });
 
-  group('getBeers', () {
-    test(
+  group(
+    'getBeers',
+            () {
+      test(
         'should throw a FetchDataException when response.statusCode is not 200',
-        () async {
-      // Use mockito to mock the response of API call
-      when(mockClient.get('$kApiBaseUrl/$kBeerResource?page=1&per_page=10'))
-          .thenAnswer((_) async => http.Response("mock_body", 400));
+                () async {
+          when(mockClient.get(urlToCall)).thenAnswer(
+                    (_) async => Response("mock_body", 400),
+          );
 
-      expect(beersRepository.getBeers(),
-          throwsA(predicate((e) => e is FetchDataException)));
-    });
+          expect(
+            beersRepository.getBeers(),
+            // You can find full list of matchers => https://api.flutter.dev/flutter/package-matcher_matcher/package-matcher_matcher-library.html
+            throwsA(
+              predicate((dynamic e) => e is FetchDataException),
+            ),
+          );
+        },
+      );
 
-    test('should return a list of beer with one beer', () async {
-      const mockJson =
-          "[{\"id\":1,\"name\":\"Buzz\",\"tagline\":\"A Real Bitter Experience.\",\"description\":\"A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.\",\"image_url\":\"https:\/\/images.punkapi.com\/v2\/keg.png\"}]";
-      when(mockClient.get('$kApiBaseUrl/$kBeerResource?page=1&per_page=10'))
-          .thenAnswer((_) async => http.Response(mockJson, 200));
+      test(
+        'should return a list of beer with one beer',
+                () async {
+          const mockJson =
+                  "[{\"id\":1,\"name\":\"Buzz\",\"tagline\":\"A Real Bitter Experience.\",\"description\":\"A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.\",\"image_url\":\"https:\/\/images.punkapi.com\/v2\/keg.png\"}]";
+          when(mockClient.get(urlToCall)).thenAnswer(
+                    (_) async => Response(mockJson, 200),
+          );
 
-      final beers = await beersRepository.getBeers();
-      expect(beers, isList);
-      expect(beers.length, 1);
+          final beers = await beersRepository.getBeers();
+          expect(beers, isList);
+          expect(beers!.length, 1);
 
-      final first = beers[0];
-      expect(first.id, 1);
-      expect(first.name, 'Buzz');
-    });
-  });
+          final first = beers[0];
+          expect(first.id, 1);
+          expect(first.name, 'Buzz');
+        },
+      );
+    },
+  );
 }
 
 ```

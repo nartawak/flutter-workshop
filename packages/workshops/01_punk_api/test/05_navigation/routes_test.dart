@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:punk_api/05_navigation/models/beer.dart';
 import 'package:punk_api/05_navigation/repositories/beer_repository.dart';
 import 'package:punk_api/05_navigation/routes/detail/detail_route.dart';
@@ -21,15 +21,27 @@ final _mockBeer = Beer(
 
 void main() {
   group('Navigation', () {
-    NavigatorObserver? _mockObserver;
+    late NavigatorObserver _mockObserver;
     late MaterialApp _mockMaterialApp;
+
+    setUpAll(() {
+      registerFallbackValue<Route<dynamic>>(
+        MaterialPageRoute(
+          builder: (_) => MasterRoute(
+            beersRepository: BeersRepository(
+              client: http.Client(),
+            ),
+          ),
+        ),
+      );
+    });
 
     setUp(() {
       _mockObserver = MockNavigatorObserver();
       _mockMaterialApp = MaterialApp(
         title: 'Flutter Demo',
         navigatorKey: _mockNavigatorKey,
-        navigatorObservers: [_mockObserver!],
+        navigatorObservers: [_mockObserver],
         initialRoute: MasterRoute.routeName,
         routes: {
           MasterRoute.routeName: (_) => MasterRoute(
@@ -47,14 +59,14 @@ void main() {
       await tester.pumpWidget(_mockMaterialApp);
 
       expect(find.byType(MasterRoute), findsOneWidget);
-      verify(_mockObserver!.didPush(any!, any));
+      verify(() => _mockObserver.didPush(any(), any())).called(1);
     });
 
     testWidgets('should navigate on DetailRoute', (WidgetTester tester) async {
       await tester.pumpWidget(_mockMaterialApp);
 
       // MasterRoute
-      verify(_mockObserver!.didPush(any!, any));
+      verify(() => _mockObserver.didPush(any(), any())).called(1);
 
       _mockNavigatorKey.currentState!
           .pushNamed(DetailRoute.routeName, arguments: _mockBeer);
@@ -63,7 +75,7 @@ void main() {
 
       expect(find.byType(DetailRoute), findsOneWidget);
       expect(find.text(_mockBeerName), findsOneWidget);
-      verify(_mockObserver!.didPush(any!, any));
+      verify(() => _mockObserver.didPush(any(), any())).called(1);
     });
   });
 }
