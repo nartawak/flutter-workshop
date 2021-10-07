@@ -8,12 +8,13 @@ class Beer {
   final String? description;
   final String imageURL;
 
-  Beer(
-      {required this.id,
-      required this.name,
-      this.tagline,
-      this.description,
-      required this.imageURL});
+  Beer({
+    required this.id,
+    required this.name,
+    this.tagline,
+    this.description,
+    required this.imageURL,
+  });
 
   factory Beer.fromJson(Map<String, dynamic> json) {
     return Beer(

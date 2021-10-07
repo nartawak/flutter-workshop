@@ -116,9 +116,8 @@ class DetailRoute extends StatelessWidget {
 
   DetailRoute({
     Key key,
-    this.beer,
-  })  : assert(beer != null),
-        super(key: key);
+    required this.beer,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +194,7 @@ class DetailRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Beer beer = ModalRoute.of(context).settings.arguments;
+    final Beer beer = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -225,6 +224,11 @@ For the functional part, I prefer the use of integration tests with this [packag
 
 I propose an example of testing with widget testing to discuss.
 
+:::warning
+Since Dart 2.12 and null safety, `mockito` package is hard to use in every use case. There is another package [mocktail](https://pub.dev/packages/mocktail)
+that allow to mock data, add it to `dev_dependency` to run the tests 👇.
+:::
+
 ```dart
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
@@ -240,8 +244,20 @@ final _mockBeer = Beer(
 
 void main() {
   group('Navigation', () {
-    NavigatorObserver _mockObserver;
-    MaterialApp _mockMaterialApp;
+    late NavigatorObserver _mockObserver;
+    late MaterialApp _mockMaterialApp;
+
+    setUpAll(() {
+      registerFallbackValue<Route<dynamic>>(
+        MaterialPageRoute(
+          builder: (_) => MasterRoute(
+            beersRepository: BeersRepository(
+              client: http.Client(),
+            ),
+          ),
+        ),
+      );
+    });
 
     setUp(() {
       _mockObserver = MockNavigatorObserver();
@@ -252,39 +268,38 @@ void main() {
         initialRoute: MasterRoute.routeName,
         routes: {
           MasterRoute.routeName: (_) => MasterRoute(
-                beersRepository: BeersRepository(
-                  client: http.Client(),
-                ),
-              ),
+            beersRepository: BeersRepository(
+              client: http.Client(),
+            ),
+          ),
           DetailRoute.routeName: (_) => DetailRoute(),
         },
       );
     });
 
     testWidgets('should initialize application on MasterRoute',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(_mockMaterialApp);
+                    (WidgetTester tester) async {
+              await tester.pumpWidget(_mockMaterialApp);
 
-      expect(find.byType(MasterRoute), findsOneWidget);
-      verify(_mockObserver.didPush(any, any));
-    });
+              expect(find.byType(MasterRoute), findsOneWidget);
+              verify(() => _mockObserver.didPush(any(), any())).called(1);
+            });
 
     testWidgets('should navigate on DetailRoute', (WidgetTester tester) async {
       await tester.pumpWidget(_mockMaterialApp);
 
       // MasterRoute
-      verify(_mockObserver.didPush(any, any));
+      verify(() => _mockObserver.didPush(any(), any())).called(1);
 
-      _mockNavigatorKey.currentState
-          .pushNamed(DetailRoute.routeName, arguments: _mockBeer);
+      _mockNavigatorKey.currentState!
+              .pushNamed(DetailRoute.routeName, arguments: _mockBeer);
 
       await tester.pumpAndSettle();
 
       expect(find.byType(DetailRoute), findsOneWidget);
       expect(find.text(_mockBeerName), findsOneWidget);
-      verify(_mockObserver.didPush(any, any));
+      verify(() => _mockObserver.didPush(any(), any())).called(1);
     });
   });
 }
-
 ```

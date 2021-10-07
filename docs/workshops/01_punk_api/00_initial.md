@@ -23,17 +23,36 @@ At the end of this step, you will have built this :point_down:
 - create the Flutter application
 
 ```shell
-flutter create --org com.nartawak --project-name punk_api .
+flutter create --org com.nartawak --project-name punk_api
 ```
 
 - open the project with your IDE (Android Studio, VsCode)
 
 - start the emulator (Android or/and iOS)
 
+- List available devices
+
+```shell
+flutter devices
+3 connected devices:
+
+iPhone 13 (mobile) • 46FC9C80-EFA9-423E-A2C0-99CFD9D33D6B • ios            •
+com.apple.CoreSimulator.SimRuntime.iOS-15-0 (simulator)
+macOS (desktop)    • macos                                • darwin-x64     • macOS 11.5.2 20G95 darwin-x64
+Chrome (web)       • chrome                               • web-javascript • Google Chrome 94.0.4606.81
+
+```
+
 - run the project, either with the IDE or in command line, and and check that the application is running correctly
 
 ```shell script
 flutter run
+
+# Run application on selected device
+flutter run -d <ID>
+
+# Run on application all device
+flutter run -d <ID>
 ```
 
 ## What a flutter project looks like ?

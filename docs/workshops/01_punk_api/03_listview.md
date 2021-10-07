@@ -177,7 +177,6 @@ test
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^4.1.3
   network_image_mock: ^1.0.2
 ```
 
@@ -279,116 +278,116 @@ void main() {
 ### master_route_test.dart
 
 ```dart
-// ignore: must_be_immutable
-class MockBeerRepository extends Mock implements BeersRepository {}
+import 'master_route_test.mocks.dart';
 
+@GenerateMocks([BeersRepository])
 void main() {
-  BeersRepository beersRepository;
+  late BeersRepository beersRepository;
 
   setUp(() {
-    beersRepository = MockBeerRepository();
+    beersRepository = MockBeersRepository();
   });
 
   group('MasterRouteStateful', () {
     testWidgets(
-        'should call beersRepository.getBeers on initState lifecycle hook',
-        (WidgetTester tester) async {
-      when(
-        beersRepository.getBeers(),
-      ).thenAnswer((_) async => []);
+            'should call beersRepository.getBeers on initState lifecycle hook',
+                    (WidgetTester tester) async {
+              when(
+                beersRepository.getBeers(),
+              ).thenAnswer((_) async => []);
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MasterRouteStateful(
-            beersRepository: beersRepository,
-          ),
-        ),
-      );
+              await tester.pumpWidget(
+                MaterialApp(
+                  home: MasterRouteStateful(
+                    beersRepository: beersRepository,
+                  ),
+                ),
+              );
 
-      verify(
-        beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80),
-      ).called(1);
-    });
-
-    testWidgets(
-        'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
-        (WidgetTester tester) async {
-          // Completer comes from dart:async package and allows to create Future
-      Completer completer = Completer();
-      when(
-        beersRepository.getBeers(),
-      ).thenAnswer((_) => completer.future);
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MasterRouteStateful(
-            beersRepository: beersRepository,
-          ),
-        ),
-      );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    });
+              verify(
+                beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80),
+              ).called(1);
+            });
 
     testWidgets(
-        'should display an error message when beersRepository.getBeers rejects an FetchDataException',
-        (WidgetTester tester) async {
-      when(
-        beersRepository.getBeers(
-          pageNumber: 1,
-          itemsPerPage: 80,
-        ),
-      ).thenAnswer((_) => Future.error(FetchDataException()));
+            'should display CircularProgressIndicator when beersRepository.getBeers is not resolved',
+                    (WidgetTester tester) async {
+              Completer completer = Completer<List<Beer>>();
+              when(
+                beersRepository.getBeers(
+                  pageNumber: 1,
+                  itemsPerPage: 80,
+                ),
+              ).thenAnswer((_) => completer.future as Future<List<Beer>>);
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: MasterRouteStateful(
-            beersRepository: beersRepository,
-          ),
-        ),
-      );
+              await tester.pumpWidget(
+                MaterialApp(
+                  home: MasterRouteStateful(
+                    beersRepository: beersRepository,
+                  ),
+                ),
+              );
 
-      // beersRepository.getBeers Future is resolved after the first call of the build method.
-      // if you need ro recall the build function, to up to date the widget tree, you need to explicitly call pumpAndSettle function before expecting
-      await tester.pumpAndSettle();
-
-      expect(find.text('An error occurred'), findsOneWidget);
-    });
+              expect(find.byType(CircularProgressIndicator), findsOneWidget);
+            });
 
     testWidgets(
-        'should display ListView with 1 PunkApiCard when beersRepository.getBeers resolved with a list of 1 Beer',
-        (WidgetTester tester) async {
-      mockNetworkImagesFor(() async {
-        Completer completer = Completer<List<Beer>>();
-        when(beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80))
-            .thenAnswer((_) => completer.future);
+            'should display an error message when beersRepository.getBeers rejects an FetchDataException',
+                    (WidgetTester tester) async {
+              when(
+                beersRepository.getBeers(
+                  pageNumber: 1,
+                  itemsPerPage: 80,
+                ),
+              ).thenAnswer((_) => Future.error(FetchDataException()));
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: MasterRouteStateful(
-              beersRepository: beersRepository,
-            ),
-          ),
-        );
+              await tester.pumpWidget(
+                MaterialApp(
+                  home: MasterRouteStateful(
+                    beersRepository: beersRepository,
+                  ),
+                ),
+              );
 
-        completer.complete([
-          Beer(
-              id: 1,
-              name: 'mock_name',
-              imageURL: 'https://images.punkapi.com/v2/keg.png',
-              tagline: 'mock_tagline'),
-        ]);
-        await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
 
-        var listFinder = find.byType(ListView);
-        expect(listFinder, findsOneWidget);
+              expect(find.text('An error occurred'), findsOneWidget);
+            });
 
-        expect(
-          find.descendant(of: listFinder, matching: find.byType(PunkApiCard)),
-          findsOneWidget,
-        );
-      });
-    });
+    testWidgets(
+            'should display ListView with 1 PunkApiCard when beersRepository.getBeers resolved with a list of 1 Beer',
+                    (WidgetTester tester) async {
+              mockNetworkImagesFor(() async {
+                Completer completer = Completer<List<Beer>>();
+                when(beersRepository.getBeers(pageNumber: 1, itemsPerPage: 80))
+                        .thenAnswer((_) => completer.future as Future<List<Beer>?>);
+
+                await tester.pumpWidget(
+                  MaterialApp(
+                    home: MasterRouteStateful(
+                      beersRepository: beersRepository,
+                    ),
+                  ),
+                );
+
+                completer.complete([
+                  Beer(
+                          id: 1,
+                          name: 'mock_name',
+                          imageURL: 'https://images.punkapi.com/v2/keg.png',
+                          tagline: 'mock_tagline'),
+                ]);
+                await tester.pumpAndSettle();
+
+                var listFinder = find.byType(ListView);
+                expect(listFinder, findsOneWidget);
+
+                expect(
+                  find.descendant(of: listFinder, matching: find.byType(PunkApiCard)),
+                  findsOneWidget,
+                );
+              });
+            });
   });
 }
 
