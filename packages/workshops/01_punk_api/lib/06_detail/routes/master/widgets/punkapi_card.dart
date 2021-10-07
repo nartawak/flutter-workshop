@@ -13,7 +13,7 @@ class PunkApiCard extends StatelessWidget {
     Key? key,
     required this.beer,
     this.onBeerSelected,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

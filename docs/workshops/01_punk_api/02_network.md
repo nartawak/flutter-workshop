@@ -229,6 +229,21 @@ You need to install 2 packages as `dev_dependencies` to test this file:
 - [build_runner](https://pub.dev/packages/build_runner): A build system for Dart code generation and modular compilation.
 - [mockito](https://pub.dev/packages?q=mockito): A mock framework inspired by Mockito (Java) with APIs for Fakes, Mocks, behavior verification, and stubbing.
 
+:::tip
+
+Since `mockito` use code generation with `build_runner` package, you need to generate the `*.mocks.dart` files.
+You can generate it like this:
+
+```shell
+# run build one time
+flutter pub run build_runner build --delete-conflicting-outputs
+
+# run a watch process, every time you save a file, the process will run
+flutter pub run build_runner watch --delete-conflicting-outputs
+```
+
+:::
+
 ```dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
@@ -237,6 +252,7 @@ import 'package:mockito/mockito.dart';
 import 'package:punk_api/02_network/exceptions/custom_exceptions.dart';
 import 'package:punk_api/02_network/repositories/beer_repository.dart';
 
+// Import the generated file
 import 'beer_repository_test.mocks.dart';
 
 @GenerateMocks([Client])
