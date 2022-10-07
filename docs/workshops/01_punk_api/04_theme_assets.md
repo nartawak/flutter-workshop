@@ -102,7 +102,7 @@ final image = Image.asset(
 - add a new test in the `master_route_test.dart` where you can use the golden testing to validate the `AppBar`
 
 ::: tip Golden testing
-When you create a test with golden testing, you need to run the `flutter test` command with the `--update-golden` option to generate the png file.
+When you create a test with golden testing, you need to run the `flutter test` command with the `--update-goldens` option to generate the png file.
 Each time you modify the widget that you test with golden test, you need to re-run the command with this option to generate a new png.
 
 [Learn more](https://medium.com/flutter-community/flutter-golden-tests-compare-widgets-with-snapshots-27f83f266cea)

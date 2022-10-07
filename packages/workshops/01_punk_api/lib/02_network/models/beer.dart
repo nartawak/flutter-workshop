@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -39,5 +40,19 @@ class Beer {
       description: description ?? this.description,
       imageURL: imageURL ?? this.imageURL,
     );
+  }
+}
+
+class Demo extends StatefulWidget {
+  const Demo({Key? key}) : super(key: key);
+
+  @override
+  State<Demo> createState() => _DemoState();
+}
+
+class _DemoState extends State<Demo> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
